@@ -1,0 +1,18 @@
+FCRepo-Store - Source Code
+==========================
+
+Website
+-------
+
+    http://cwilper.github.com/fcrepo-store/
+
+Build Instructions
+------------------
+
+To build all project artifacts and install them in your local Maven repository:
+
+    mvn clean install
+
+To generate a maven site with javadocs, etc. in /tmp/fcrepo-store-site/
+
+    mvn site-deploy
