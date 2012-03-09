@@ -1,0 +1,8 @@
+  ---
+  About
+  ---
+
+About fcrepo-store
+
+  This is a Fedora Object Storage API designed to provide basic Fedora
+object and datastream storage capabilities for collections of Fedora objects.
