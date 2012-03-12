@@ -99,13 +99,13 @@ public interface FedoraStore extends Iterable<FedoraObject> {
      * @param datastreamId the id of the datastream, never <code>null</code>.
      * @param datastreamVersionId the id of the datastream version,
      *        never <code>null</code>.
-     * @param in the content stream. Guaranteed to be closed by the time
-     *        this method returns, regardless of success.
+     * @param inputStream the content stream. Guaranteed to be closed by the
+     *        time this method returns, regardless of success.
      * @throws NullPointerException if any argument is null.
      * @throws NotFoundException if the object or managed datastream does not
      *         exist.
      * @throws StoreException if there is any other problem.
      */
     void setContent(String pid, String datastreamId,
-            String datastreamVersionId, InputStream in);
+            String datastreamVersionId, InputStream inputStream);
 }

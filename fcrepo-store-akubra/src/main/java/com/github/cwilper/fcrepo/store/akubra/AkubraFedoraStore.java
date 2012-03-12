@@ -155,24 +155,6 @@ public class AkubraFedoraStore implements FedoraStore {
     }
 
     @Override
-    public Iterator<FedoraObject> iterator() {
-        BlobStoreConnection connection = Util.getConnection(objectStore);
-        boolean success = false;
-        try {
-            Iterator<URI> ids = connection.listBlobIds(null);
-            success = true;
-            return new ConnectionClosingObjectIterator(connection, ids,
-                    readerFactory);
-        } catch (IOException e) {
-            throw new StoreException(Constants.ERR_LISTING_OBJS, e);
-        } finally {
-            if (!success) {
-                connection.close();
-            }
-        }
-    }
-    
-    @Override
     public InputStream getContent(String pid, String datastreamId,
             String datastreamVersionId) {
         Blob blob = getContentBlob(
@@ -228,6 +210,24 @@ public class AkubraFedoraStore implements FedoraStore {
         }
     }
 
+    @Override
+    public Iterator<FedoraObject> iterator() {
+        BlobStoreConnection connection = Util.getConnection(objectStore);
+        boolean success = false;
+        try {
+            Iterator<URI> ids = connection.listBlobIds(null);
+            success = true;
+            return new ConnectionClosingObjectIterator(connection, ids,
+                    readerFactory);
+        } catch (IOException e) {
+            throw new StoreException(Constants.ERR_LISTING_OBJS, e);
+        } finally {
+            if (!success) {
+                connection.close();
+            }
+        }
+    }
+
     private Blob getContentBlob(String pid, String datastreamId,
             String datastreamVersionId, boolean mustExist) {
         if (pid == null  || datastreamId == null ||
@@ -252,7 +252,7 @@ public class AkubraFedoraStore implements FedoraStore {
             success = true;
             return blob;
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_GETTING_CONT_BLOB, e);
+            throw new StoreException(Constants.ERR_GETTING_CONT, e);
         } finally {
             if (!success) connection.close();
         }
@@ -272,7 +272,7 @@ public class AkubraFedoraStore implements FedoraStore {
             connection.close();
         }
     }
-    
+
     // if newObject is null, all managed content will be deleted
     private void deleteOldManagedContent(FedoraObject oldObject,
             FedoraObject newObject) {
@@ -281,7 +281,7 @@ public class AkubraFedoraStore implements FedoraStore {
                 String datastreamId = datastream.id();
                 for (DatastreamVersion datastreamVersion : datastream.versions()) {
                     String datastreamVersionId = datastreamVersion.id();
-                    if (newObject == null || 
+                    if (newObject == null ||
                             !Util.hasManagedDatastreamVersion(
                             newObject, datastreamId, datastreamVersionId)) {
                         deleteContent(oldObject.pid(), datastreamId,
