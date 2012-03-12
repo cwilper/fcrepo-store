@@ -22,7 +22,8 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 /**
- * Legacy {@link FedoraStore} implementation.
+ * Legacy {@link FedoraStore} implementation compatible with pre-Akubra
+ * versions of Fedora.
  */
 public class LegacyFedoraStore implements FedoraStore {
     private static final Logger logger =
@@ -33,6 +34,16 @@ public class LegacyFedoraStore implements FedoraStore {
     private final DTOReader readerFactory;
     private final DTOWriter writerFactory;
 
+    /**
+     * Creates an instance. Upon construction, the object and content
+     * path registries will be built for the first time if they're empty.
+     *
+     * @param objectStore the file store to use for Fedora objects.
+     * @param contentStore the file store to use for managed content.
+     * @param readerFactory the factory to use for deserializing.
+     * @param writerFactory the factory to use for serializing.
+     * @throws NullPointerException if any argument is null.
+     */
     public LegacyFedoraStore(FileStore objectStore, FileStore contentStore,
             DTOReader readerFactory, DTOWriter writerFactory) {
         if (objectStore == null || contentStore == null
@@ -50,11 +61,7 @@ public class LegacyFedoraStore implements FedoraStore {
     private void populateRegistryIfEmpty(FileStore fileStore, String name) {
         if (fileStore.getPathCount() == 0) {
             logger.info("Populating {} Store Path Registry.", name);
-            try {
-                fileStore.populateRegistry();
-            } catch (IOException e) {
-                throw new StoreException("Error populating registry", e);
-            }
+            fileStore.populateRegistry();
         }
     }
 
@@ -134,11 +141,7 @@ public class LegacyFedoraStore implements FedoraStore {
             String datastreamVersionId) {
         String path = getContentPath(
                 pid, datastreamId, datastreamVersionId, true);
-        try {
-            return contentStore.getFileInputStream(path);
-        } catch (IOException e) {
-            throw new StoreException(CommonConstants.ERR_GETTING_CONT, e);
-        }
+        return contentStore.getFileInputStream(path);
     }
 
     @Override
@@ -146,11 +149,7 @@ public class LegacyFedoraStore implements FedoraStore {
             String datastreamVersionId) {
         String path = getContentPath(
                 pid, datastreamId, datastreamVersionId, true);
-        try {
-            return contentStore.getFileSize(path);
-        } catch (IOException e) {
-            throw new StoreException(CommonConstants.ERR_GETTING_CONT_LEN, e);
-        }
+        return contentStore.getFileSize(path);
     }
 
     @Override

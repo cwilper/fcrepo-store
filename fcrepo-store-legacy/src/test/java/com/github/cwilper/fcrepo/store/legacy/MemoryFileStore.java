@@ -1,9 +1,9 @@
 package com.github.cwilper.fcrepo.store.legacy;
 
+import com.github.cwilper.fcrepo.store.core.NotFoundException;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -22,8 +22,7 @@ public class MemoryFileStore extends AbstractFileStore {
     }
 
     @Override
-    public OutputStream getFileOutputStream(final String path)
-            throws IOException {
+    public OutputStream getFileOutputStream(final String path) {
         return new ByteArrayOutputStream() {
             @Override
             public void close() {
@@ -33,17 +32,17 @@ public class MemoryFileStore extends AbstractFileStore {
     }
 
     @Override
-    public long getFileSize(String path) throws IOException {
+    public long getFileSize(String path) {
         return getBytes(path).length;
     }
 
     @Override
-    public InputStream getFileInputStream(String path) throws IOException {
+    public InputStream getFileInputStream(String path) {
         return new ByteArrayInputStream(getBytes(path));
     }
 
     @Override
-    public void deleteFile(String path) throws IOException {
+    public void deleteFile(String path) {
         getBytes(path);
         files.remove(path);
     }
@@ -53,9 +52,9 @@ public class MemoryFileStore extends AbstractFileStore {
         return files.keySet().iterator();
     }
     
-    private byte[] getBytes(String path) throws FileNotFoundException {
+    private byte[] getBytes(String path) {
         byte[] bytes = files.get(path);
-        if (bytes == null) throw new FileNotFoundException();
+        if (bytes == null) throw new NotFoundException("No such file: " + path);
         return bytes;
     }
 }

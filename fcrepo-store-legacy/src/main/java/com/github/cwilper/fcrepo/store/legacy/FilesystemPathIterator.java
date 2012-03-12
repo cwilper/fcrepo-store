@@ -5,13 +5,19 @@ import com.google.common.collect.AbstractIterator;
 import java.io.File;
 
 /**
- * Lazily iterates paths of all files beneath a given directory.
+ * Lazily iterates paths of all files beneath a given directory. Paths
+ * returned by the iterator are relative to the given base directory.
  */
 class FilesystemPathIterator extends AbstractIterator<String> {
     private final File baseDir;
 
     private DirectoryNode currentDir;
 
+    /**
+     * Creates an instance.
+     *
+     * @param baseDir the directory whose content should be iterated.
+     */
     FilesystemPathIterator(File baseDir) {
         this.baseDir = baseDir;
     }

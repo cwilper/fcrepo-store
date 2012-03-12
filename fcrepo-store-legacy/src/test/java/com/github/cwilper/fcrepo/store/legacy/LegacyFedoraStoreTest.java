@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashSet;
@@ -420,12 +419,11 @@ public class LegacyFedoraStoreTest {
         return path != null && hasInputStream(fileStore, path);
     }
     
-    private boolean hasInputStream(FileStore fileStore, String path)
-            throws IOException {
+    private boolean hasInputStream(FileStore fileStore, String path) {
         try {
             fileStore.getFileInputStream(path);
             return true;
-        } catch (FileNotFoundException e) {
+        } catch (NotFoundException e) {
             return false;
         }
     }
