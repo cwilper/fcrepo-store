@@ -43,6 +43,7 @@
   <modules>
     <module>fcrepo-store-akubra</module>
     <module>fcrepo-store-core</module>
+    <module>fcrepo-store-legacy</module>
   </modules>
 
   <properties>
