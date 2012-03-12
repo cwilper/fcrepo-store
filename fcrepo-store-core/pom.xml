@@ -9,7 +9,7 @@
 
   <artifactId>fcrepo-store-core</artifactId>
   <packaging>jar</packaging>
-  <name>FedoraStore Core API</name>
+  <name>${project.artifactId}</name>
 
   <dependencies>
     <dependency>
