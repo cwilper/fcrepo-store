@@ -6,7 +6,7 @@ import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.DTOReader;
 import com.github.cwilper.fcrepo.dto.core.io.DTOWriter;
-import com.github.cwilper.fcrepo.store.core.Constants;
+import com.github.cwilper.fcrepo.store.core.impl.CommonConstants;
 import com.github.cwilper.fcrepo.store.core.ExistsException;
 import com.github.cwilper.fcrepo.store.core.FedoraStore;
 import com.github.cwilper.fcrepo.store.core.NotFoundException;
@@ -72,7 +72,7 @@ public class LegacyFedoraStore implements FedoraStore {
                     objectStore.getFileOutputStream(path));
             success = true;
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_ADDING_OBJ, e);
+            throw new StoreException(CommonConstants.ERR_ADDING_OBJ, e);
         } finally {
             if (!success) {
                 objectStore.setPath(object.pid(), null);
@@ -86,11 +86,11 @@ public class LegacyFedoraStore implements FedoraStore {
         try {
             String path = objectStore.getPath(pid);
             if (path == null) throw new NotFoundException(
-                    Constants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": " + pid);
+                    CommonConstants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": " + pid);
             return Util.readObject(readerFactory,
                     objectStore.getFileInputStream(path));
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_GETTING_OBJ, e);
+            throw new StoreException(CommonConstants.ERR_GETTING_OBJ, e);
         }
     }
 
@@ -101,14 +101,14 @@ public class LegacyFedoraStore implements FedoraStore {
         try {
             String path = objectStore.getPath(object.pid());
             if (path == null) throw new NotFoundException(
-                    Constants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": "
+                    CommonConstants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": "
                     + object.pid());
             deleteOldManagedContent(Util.readObject(readerFactory,
                     objectStore.getFileInputStream(path)), object);
             Util.writeObject(writerFactory, object,
                     objectStore.getFileOutputStream(path));
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_UPDATING_OBJ, e);
+            throw new StoreException(CommonConstants.ERR_UPDATING_OBJ, e);
         }
     }
 
@@ -118,14 +118,14 @@ public class LegacyFedoraStore implements FedoraStore {
         try {
             String path = objectStore.getPath(pid);
             if (path == null) throw new NotFoundException(
-                    Constants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": " + pid);
+                    CommonConstants.ERR_NOTFOUND_OBJ_IN_STORAGE + ": " + pid);
             deleteOldManagedContent(
                     Util.readObject(readerFactory,
                             objectStore.getFileInputStream(path)), null);
             objectStore.deleteFile(path);
             objectStore.setPath(pid, null);
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_DELETING_OBJ, e);
+            throw new StoreException(CommonConstants.ERR_DELETING_OBJ, e);
         }
     }
 
@@ -137,7 +137,7 @@ public class LegacyFedoraStore implements FedoraStore {
         try {
             return contentStore.getFileInputStream(path);
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_GETTING_CONT, e);
+            throw new StoreException(CommonConstants.ERR_GETTING_CONT, e);
         }
     }
 
@@ -149,7 +149,7 @@ public class LegacyFedoraStore implements FedoraStore {
         try {
             return contentStore.getFileSize(path);
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_GETTING_CONT_LEN, e);
+            throw new StoreException(CommonConstants.ERR_GETTING_CONT_LEN, e);
         }
     }
 
@@ -168,7 +168,7 @@ public class LegacyFedoraStore implements FedoraStore {
             outputStream.close();
             success = true;
         } catch (IOException e) {
-            throw new StoreException(Constants.ERR_SETTING_CONT, e);
+            throw new StoreException(CommonConstants.ERR_SETTING_CONT, e);
         } finally {
             if (!success) {
                 Util.closeOrWarn(inputStream);
@@ -189,7 +189,7 @@ public class LegacyFedoraStore implements FedoraStore {
                         return Util.readObject(readerFactory,
                                 objectStore.getFileInputStream(path));
                     } catch (IOException e) {
-                        logger.warn(Constants.ERR_PARSING_OBJ + ": "
+                        logger.warn(CommonConstants.ERR_PARSING_OBJ + ": "
                                 + path, e);
                     }
                 }
@@ -205,7 +205,7 @@ public class LegacyFedoraStore implements FedoraStore {
         FedoraObject object = getObject(pid);
         if (!Util.hasManagedDatastreamVersion(object, datastreamId,
                 datastreamVersionId)) {
-            throw new NotFoundException(Constants.ERR_NOTFOUND_DS_IN_OBJ + " "
+            throw new NotFoundException(CommonConstants.ERR_NOTFOUND_DS_IN_OBJ + " "
                     + Util.getDetails(pid, datastreamId, datastreamVersionId));
         }
         String id = Util.getId(pid, datastreamId, datastreamVersionId);
@@ -213,7 +213,7 @@ public class LegacyFedoraStore implements FedoraStore {
         if (path == null) {
             if (mustExist) {
                 throw new NotFoundException(
-                        Constants.ERR_NOTFOUND_DS_IN_STORAGE + " "
+                        CommonConstants.ERR_NOTFOUND_DS_IN_STORAGE + " "
                         + Util.getDetails(pid, datastreamId,
                         datastreamVersionId));
             } else {
@@ -230,7 +230,7 @@ public class LegacyFedoraStore implements FedoraStore {
         String id = Util.getId(pid, datastreamId, datastreamVersionId);
         String path = contentStore.getPath(id);
         if (path == null) {
-            logger.warn(Constants.ERR_DELETING_CONT + " " + Util.getDetails(
+            logger.warn(CommonConstants.ERR_DELETING_CONT + " " + Util.getDetails(
                     pid, datastreamId, datastreamVersionId)
                     + ": No such datastream in registry");
         }
@@ -238,7 +238,7 @@ public class LegacyFedoraStore implements FedoraStore {
             contentStore.deleteFile(path);
             contentStore.setPath(id, null);
         } catch (Exception e) {
-            logger.warn(Constants.ERR_DELETING_CONT + " " + Util.getDetails(
+            logger.warn(CommonConstants.ERR_DELETING_CONT + " " + Util.getDetails(
                     pid, datastreamId, datastreamVersionId), e);
         }
     }

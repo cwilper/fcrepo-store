@@ -1,9 +1,9 @@
-package com.github.cwilper.fcrepo.store.core;
+package com.github.cwilper.fcrepo.store.core.impl;
 
 /**
  * Constants useful to implementations.
  */
-public class Constants {
+public class CommonConstants {
     public static final String CHAR_ENCODING = "UTF-8";
     public static final String ERR_ADDING_OBJ = "Error adding object";
     public static final String ERR_CLOSING_STREAM = "Error closing stream";

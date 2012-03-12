@@ -4,6 +4,7 @@ import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.DTOReader;
 import com.github.cwilper.fcrepo.dto.core.io.DTOWriter;
 import com.github.cwilper.fcrepo.store.core.StoreException;
+import com.github.cwilper.fcrepo.store.core.impl.CommonUtil;
 import org.akubraproject.Blob;
 import org.akubraproject.BlobStore;
 import org.akubraproject.BlobStoreConnection;
@@ -18,7 +19,7 @@ import java.net.URLEncoder;
 /**
  * Utility methods useful to this implementation.
  */
-final class Util extends com.github.cwilper.fcrepo.store.core.Util {
+final class Util extends CommonUtil {
     private static final Logger logger =
             LoggerFactory.getLogger(Util.class);
 

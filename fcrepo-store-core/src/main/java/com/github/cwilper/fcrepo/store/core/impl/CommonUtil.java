@@ -1,4 +1,4 @@
-package com.github.cwilper.fcrepo.store.core;
+package com.github.cwilper.fcrepo.store.core.impl;
 
 import com.github.cwilper.fcrepo.dto.core.ControlGroup;
 import com.github.cwilper.fcrepo.dto.core.Datastream;
@@ -13,9 +13,9 @@ import java.io.IOException;
 /**
  * Utility methods useful to implementations.
  */
-public class Util {
+public class CommonUtil {
     private static final Logger logger =
-            LoggerFactory.getLogger(Util.class);
+            LoggerFactory.getLogger(CommonUtil.class);
 
     public static String getDetails(String pid,
             String datastreamId, String datastreamVersionId) {
@@ -43,7 +43,7 @@ public class Util {
         try {
             if (stream != null) stream.close();
         } catch (IOException e) {
-            logger.warn(Constants.ERR_CLOSING_STREAM, e);
+            logger.warn(CommonConstants.ERR_CLOSING_STREAM, e);
         }
     }
 }
