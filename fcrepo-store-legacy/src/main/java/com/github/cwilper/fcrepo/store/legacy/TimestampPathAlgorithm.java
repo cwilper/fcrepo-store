@@ -34,7 +34,9 @@ public class TimestampPathAlgorithm implements PathAlgorithm {
     }
     
     private static String decode(String in) {
-        return null;
+        int i = in.indexOf("+");
+        if (i == -1) return filenameToPid(in);
+        return filenameToPid(in.substring(0, i)) + in.substring(i);
     }
 
     private static String pad(int requiredLength, int in) {

@@ -8,8 +8,6 @@ import com.github.cwilper.fcrepo.store.core.impl.CommonUtil;
 import org.akubraproject.Blob;
 import org.akubraproject.BlobStore;
 import org.akubraproject.BlobStoreConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -20,9 +18,6 @@ import java.net.URLEncoder;
  * Utility methods useful to this implementation.
  */
 final class Util extends CommonUtil {
-    private static final Logger logger =
-            LoggerFactory.getLogger(Util.class);
-
     private Util() { }
 
     static BlobStoreConnection getConnection(BlobStore blobStore) {
