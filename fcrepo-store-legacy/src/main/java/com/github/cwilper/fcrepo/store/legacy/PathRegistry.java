@@ -13,7 +13,7 @@ public interface PathRegistry {
      * @return the number of paths.
      * @throws StoreException if any problem occurs.
      */
-    long getPathCount() throws StoreException;
+    long getPathCount();
 
     /**
      * Gets the path for the given id.
@@ -22,7 +22,7 @@ public interface PathRegistry {
      * @return the path, or <code>null</code> if no such mapping exists.
      * @throws StoreException if any problem occurs.
      */
-    String getPath(String id) throws StoreException;
+    String getPath(String id);
 
     /**
      * Sets the path for the given id.
@@ -31,5 +31,5 @@ public interface PathRegistry {
      * @param path the path or <code>null</code> to delete the mapping.
      * @throws StoreException if any problem occurs.
      */
-    void setPath(String id, String path) throws StoreException;
+    void setPath(String id, String path);
 }

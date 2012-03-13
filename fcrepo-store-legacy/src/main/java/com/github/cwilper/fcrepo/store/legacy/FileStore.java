@@ -20,7 +20,7 @@ public interface FileStore
      * @return the output stream.
      * @throws StoreException if any problem occurs.
      */
-    OutputStream getFileOutputStream(String path) throws StoreException;
+    OutputStream getFileOutputStream(String path);
 
     /**
      * Gets the size of the file at the given path.
@@ -30,7 +30,7 @@ public interface FileStore
      * @throws NotFoundException if the file is not found.
      * @throws StoreException if any other problem occurs.
      */
-    long getFileSize(String path) throws NotFoundException, StoreException;
+    long getFileSize(String path);
 
     /**
      * Gets an input stream for reading the file at the given path.
@@ -40,8 +40,7 @@ public interface FileStore
      * @throws NotFoundException if the file is not found.
      * @throws StoreException if any other problem occurs.
      */
-    InputStream getFileInputStream(String path) throws NotFoundException,
-            StoreException;
+    InputStream getFileInputStream(String path);
 
     /**
      * Deletes the file at the given path.
@@ -50,7 +49,7 @@ public interface FileStore
      * @throws NotFoundException if the file is not found.
      * @throws StoreException if any other problem occurs.
      */
-    void deleteFile(String path) throws NotFoundException, StoreException;
+    void deleteFile(String path);
 
     /**
      * Iterates the paths of all fiels in this store and adds the id, path
@@ -58,5 +57,5 @@ public interface FileStore
      *
      * @throws StoreException if any problem occurs.
      */
-    void populateRegistry() throws StoreException;
+    void populateRegistry();
 }
