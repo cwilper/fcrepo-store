@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<javadocOptions>
+  <docletArtifacts>
+    <docletArtifact />
+  </docletArtifacts>
+  <tagletArtifacts>
+    <tagletArtifact />
+  </tagletArtifacts>
+  <links>
+    <link>http://akubra.github.com/akubra/apidocs/</link>
+    <link>http://cwilper.github.com/fcrepo-misc/apidocs/</link>
+    <link>http://docs.oracle.com/javase/6/docs/api/</link>
+    <link>../apidocs</link>
+  </links>
+  <javadocResourcesDirectory>src/test/javadoc</javadocResourcesDirectory>
+</javadocOptions>

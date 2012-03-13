@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2012-03-13T14:24:53.512">
+<file name="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-legacy/src/main/java/com/github/cwilper/fcrepo/store/legacy/FileStore.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="62" rule="UnusedImports" ruleset="Import Statement Rules" package="com.github.cwilper.fcrepo.store.legacy" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'com.github.cwilper.fcrepo.store.core.NotFoundException'
+</violation>
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="59" rule="UnusedImports" ruleset="Import Statement Rules" package="com.github.cwilper.fcrepo.store.legacy" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'com.github.cwilper.fcrepo.store.core.StoreException'
+</violation>
+</file>
+<file name="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-legacy/src/main/java/com/github/cwilper/fcrepo/store/legacy/PathRegistry.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="59" rule="UnusedImports" ruleset="Import Statement Rules" package="com.github.cwilper.fcrepo.store.legacy" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'com.github.cwilper.fcrepo.store.core.StoreException'
+</violation>
+</file>
+<file name="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-legacy/src/main/java/com/github/cwilper/fcrepo/store/legacy/TemporaryDerbyDB.java">
+<violation beginline="68" endline="70" begincolumn="15" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.github.cwilper.fcrepo.store.legacy" class="TemporaryDerbyDB" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+</pmd>

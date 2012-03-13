@@ -1,2 +1,3 @@
 com.github.cwilper.fcrepo.store.akubra
 com.github.cwilper.fcrepo.store.core
+com.github.cwilper.fcrepo.store.legacy

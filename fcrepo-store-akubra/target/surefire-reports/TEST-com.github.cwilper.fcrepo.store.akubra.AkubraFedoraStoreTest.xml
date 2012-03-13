@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="1.147" errors="0" skipped="0" tests="45" name="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
+    <property name="java.vm.version" value="20.4-b02-402"/>
+    <property name="awt.nativeDoubleBuffering" value="true"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="mrj.build" value="11M3527"/>
+    <property name="java.vm.vendor" value="Apple Inc."/>
+    <property name="java.vendor.url" value="http://www.apple.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra"/>
+    <property name="java.runtime.version" value="1.6.0_29-b11-402-11M3527"/>
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment"/>
+    <property name="basedir" value="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra"/>
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="surefire.real.class.path" value="/var/folders/q2/pzv29wsd2h3dpjk6pp9_xnt00000gn/T/surefirebooter4248641461815745188.jar"/>
+    <property name="java.io.tmpdir" value="/var/folders/q2/pzv29wsd2h3dpjk6pp9_xnt00000gn/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="sun.jnu.encoding" value="MacRoman"/>
+    <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="surefire.test.class.path" value="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra/target/test-classes:/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra/target/generated-classes/cobertura:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-dto-foxml/1.1.0-SNAPSHOT/fcrepo-dto-foxml-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-dto-core/1.1.0-SNAPSHOT/fcrepo-dto-core-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-httpclient/1.1.0-SNAPSHOT/fcrepo-httpclient-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/org/apache/httpcomponents/httpclient/4.0.3/httpclient-4.0.3.jar:/Users/cwilper/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar:/Users/cwilper/.m2/repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar:/Users/cwilper/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar:/Users/cwilper/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.4/jcl-over-slf4j-1.6.4.jar:/Users/cwilper/.m2/repository/commons-io/commons-io/2.1/commons-io-2.1.jar:/Users/cwilper/.m2/repository/net/java/dev/stax-utils/stax-utils/20060502/stax-utils-20060502.jar:/Users/cwilper/.m2/repository/org/apache/santuario/xmlsec/1.4.3/xmlsec-1.4.3.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-store/fcrepo-store-core/0.1.0-SNAPSHOT/fcrepo-store-core-0.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-collections/r03/guava-collections-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-annotations/r03/guava-annotations-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-primitives/r03/guava-primitives-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-base/r03/guava-base-r03.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-core/0.4.0/akubra-core-0.4.0.jar:/Users/cwilper/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-map/0.4.0/akubra-map-0.4.0.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-mem/0.4.0/akubra-mem-0.4.0.jar:/Users/cwilper/.m2/repository/ch/qos/logback/logback-classic/1.0.0/logback-classic-1.0.0.jar:/Users/cwilper/.m2/repository/ch/qos/logback/logback-core/1.0.0/logback-core-1.0.0.jar:/Users/cwilper/.m2/repository/junit/junit/4.2/junit-4.2.jar:/Users/cwilper/.m2/repository/org/easymock/easymock/3.1/easymock-3.1.jar:/Users/cwilper/.m2/repository/cglib/cglib-nodep/2.2.2/cglib-nodep-2.2.2.jar:/Users/cwilper/.m2/repository/org/objenesis/objenesis/1.2/objenesis-1.2.jar:/Users/cwilper/.m2/repository/net/sourceforge/cobertura/cobertura/1.9.4.1/cobertura-1.9.4.1.jar:/Users/cwilper/.m2/repository/org/apache/ant/ant/1.7.0/ant-1.7.0.jar:/Users/cwilper/.m2/repository/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.7.3"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="user.home" value="/Users/cwilper"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="MacRoman"/>
+    <property name="user.name" value="cwilper"/>
+    <property name="java.class.path" value="/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra/target/test-classes:/Users/cwilper/work/gh/cwilper/fcrepo-store/fcrepo-store-akubra/target/generated-classes/cobertura:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-dto-foxml/1.1.0-SNAPSHOT/fcrepo-dto-foxml-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-dto-core/1.1.0-SNAPSHOT/fcrepo-dto-core-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-misc/fcrepo-httpclient/1.1.0-SNAPSHOT/fcrepo-httpclient-1.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/org/apache/httpcomponents/httpclient/4.0.3/httpclient-4.0.3.jar:/Users/cwilper/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar:/Users/cwilper/.m2/repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar:/Users/cwilper/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar:/Users/cwilper/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.4/jcl-over-slf4j-1.6.4.jar:/Users/cwilper/.m2/repository/commons-io/commons-io/2.1/commons-io-2.1.jar:/Users/cwilper/.m2/repository/net/java/dev/stax-utils/stax-utils/20060502/stax-utils-20060502.jar:/Users/cwilper/.m2/repository/org/apache/santuario/xmlsec/1.4.3/xmlsec-1.4.3.jar:/Users/cwilper/.m2/repository/com/github/cwilper/fcrepo-store/fcrepo-store-core/0.1.0-SNAPSHOT/fcrepo-store-core-0.1.0-SNAPSHOT.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-collections/r03/guava-collections-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-annotations/r03/guava-annotations-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-primitives/r03/guava-primitives-r03.jar:/Users/cwilper/.m2/repository/com/google/guava/guava-base/r03/guava-base-r03.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-core/0.4.0/akubra-core-0.4.0.jar:/Users/cwilper/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-map/0.4.0/akubra-map-0.4.0.jar:/Users/cwilper/.m2/repository/org/akubraproject/akubra-mem/0.4.0/akubra-mem-0.4.0.jar:/Users/cwilper/.m2/repository/ch/qos/logback/logback-classic/1.0.0/logback-classic-1.0.0.jar:/Users/cwilper/.m2/repository/ch/qos/logback/logback-core/1.0.0/logback-core-1.0.0.jar:/Users/cwilper/.m2/repository/junit/junit/4.2/junit-4.2.jar:/Users/cwilper/.m2/repository/org/easymock/easymock/3.1/easymock-3.1.jar:/Users/cwilper/.m2/repository/cglib/cglib-nodep/2.2.2/cglib-nodep-2.2.2.jar:/Users/cwilper/.m2/repository/org/objenesis/objenesis/1.2/objenesis-1.2.jar:/Users/cwilper/.m2/repository/net/sourceforge/cobertura/cobertura/1.9.4.1/cobertura-1.9.4.1.jar:/Users/cwilper/.m2/repository/org/apache/ant/ant/1.7.0/ant-1.7.0.jar:/Users/cwilper/.m2/repository/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
+    <property name="sun.java.command" value="/var/folders/q2/pzv29wsd2h3dpjk6pp9_xnt00000gn/T/surefirebooter4248641461815745188.jar /var/folders/q2/pzv29wsd2h3dpjk6pp9_xnt00000gn/T/surefire8287847562533260455tmp /var/folders/q2/pzv29wsd2h3dpjk6pp9_xnt00000gn/T/surefire3647011568837447103tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="apple.awt.CToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_29"/>
+    <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext"/>
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar"/>
+    <property name="java.vendor" value="Apple Inc."/>
+    <property name="localRepository" value="/Users/cwilper/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="mrj.version" value="1070.1.6.0_29-402"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.313" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="initWithNullObjectStore"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="initWithNullContentStore"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="initWithNullReaderFactory"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="initWithNullWriterFactory"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="addObjectNull"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="addObjectNoPid"/>
+  <testcase time="0.033" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="addObjectExisting"/>
+  <testcase time="0.393" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="addObjectNew"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getObjectNullPid"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getObjectNonExisting"/>
+  <testcase time="0.028" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getObjectExistingTwice"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectNull"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectNoPid"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectNonExisting"/>
+  <testcase time="0.013" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectLabel"/>
+  <testcase time="0.02" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectDropExistingContent"/>
+  <testcase time="0.015" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="updateObjectDropNonExistingContent"/>
+  <testcase time="0.009" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="deleteObjectNullPid"/>
+  <testcase time="0.009" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="deleteObjectNonExisting"/>
+  <testcase time="0.019" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="listObjectsEmpty"/>
+  <testcase time="0.011" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="listObjectsAfterAdd"/>
+  <testcase time="0.011" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="listObjectsAfterDelete"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="deleteObjectWithContent"/>
+  <testcase time="0.005" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentNullPid"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentNullDatastreamId"/>
+  <testcase time="0.006" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentNullDatastreamVersionId"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentObjectNotFound"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentDatastreamNotFound"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentDatastreamExistsContentNotFound"/>
+  <testcase time="0.011" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentDatastreamExistsContentExistsTwice"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthNullPid"/>
+  <testcase time="0.005" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthNullDatastreamId"/>
+  <testcase time="0.006" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthNullDatastreamVersionId"/>
+  <testcase time="0.006" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthObjectNotFound"/>
+  <testcase time="0.007" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthDatastreamNotFound"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthDatastreamExistsContentNotFound"/>
+  <testcase time="0.008" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="getContentLengthDatastreamExistsContentFoundTwice"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentNullPid"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentNullDatastreamId"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentNullDatastreamVersionId"/>
+  <testcase time="0.004" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentNullInputStream"/>
+  <testcase time="0.013" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentObjectNotFound"/>
+  <testcase time="0.006" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentDatastreamNotFound"/>
+  <testcase time="0.006" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentDatastreamNotManaged"/>
+  <testcase time="0.009" classname="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStoreTest" name="setContentDatastreamManagedTwice"/>
+</testsuite>
