@@ -20,6 +20,7 @@ class FilesystemPathIterator extends AbstractIterator<String> {
      */
     FilesystemPathIterator(File baseDir) {
         this.baseDir = baseDir;
+        currentDir = new DirectoryNode(null, "");
     }
 
     @Override

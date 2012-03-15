@@ -44,6 +44,7 @@
     <module>fcrepo-store-akubra</module>
     <module>fcrepo-store-core</module>
     <module>fcrepo-store-legacy</module>
+    <module>fcrepo-store-util</module>
   </modules>
 
   <properties>
@@ -82,7 +83,25 @@
 
       <dependency>
         <groupId>com.github.cwilper.fcrepo-store</groupId>
+        <artifactId>fcrepo-store-akubra</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.cwilper.fcrepo-store</groupId>
         <artifactId>fcrepo-store-core</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.cwilper.fcrepo-store</groupId>
+        <artifactId>fcrepo-store-legacy</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.cwilper.fcrepo-store</groupId>
+        <artifactId>fcrepo-store-util</artifactId>
         <version>${pom.version}</version>
       </dependency>
 
@@ -113,6 +132,12 @@
       <dependency>
         <groupId>org.akubraproject</groupId>
         <artifactId>akubra-core</artifactId>
+        <version>0.4.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.akubraproject</groupId>
+        <artifactId>akubra-fs</artifactId>
         <version>0.4.0</version>
       </dependency>
 

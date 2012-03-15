@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+  <bean id="akubra"
+      class="com.github.cwilper.fcrepo.store.akubra.AkubraFedoraStore">
+    <constructor-arg>
+      <bean class="org.akubraproject.map.IdMappingBlobStore">
+        <constructor-arg value="urn:example.org:id"/>
+        <constructor-arg>
+          <bean class="org.akubraproject.fs.FSBlobStore">
+            <constructor-arg value="urn:example.org:id"/>
+            <constructor-arg value="${akubra.objectDir}"/>
+          </bean>
+        </constructor-arg>
+        <constructor-arg ref="akubra-mapper"/>
+      </bean>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="org.akubraproject.map.IdMappingBlobStore">
+        <constructor-arg value="urn:example.org:id"/>
+        <constructor-arg>
+          <bean class="org.akubraproject.fs.FSBlobStore">
+            <constructor-arg value="urn:example.org:id"/>
+            <constructor-arg value="${akubra.contentDir}"/>
+          </bean>
+        </constructor-arg>
+        <constructor-arg ref="akubra-mapper"/>
+      </bean>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.dto.foxml.FOXMLReader"/>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.dto.foxml.FOXMLWriter"/>
+    </constructor-arg>
+  </bean>
+  <bean name="akubra-mapper"
+      class="com.github.cwilper.fcrepo.store.akubra.HashPathIdMapper">
+    <constructor-arg value="##"/>
+  </bean>
+</beans>

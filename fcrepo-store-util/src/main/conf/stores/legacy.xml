@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+  <bean id="legacy"
+      class="com.github.cwilper.fcrepo.store.legacy.LegacyFedoraStore">
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.store.legacy.FilesystemFileStore">
+        <constructor-arg>
+          <bean class="com.github.cwilper.fcrepo.store.legacy.DBPathRegistry">
+            <constructor-arg ref="legacy-db"/>
+            <constructor-arg value="objects"/>
+          </bean>
+        </constructor-arg>
+        <constructor-arg ref="legacy-algorithm"/>
+        <constructor-arg value="${legacy.objectDir}"/>
+      </bean>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.store.legacy.FilesystemFileStore">
+        <constructor-arg>
+          <bean class="com.github.cwilper.fcrepo.store.legacy.DBPathRegistry">
+            <constructor-arg ref="legacy-db"/>
+            <constructor-arg value="datastreams"/>
+          </bean>
+        </constructor-arg>
+        <constructor-arg ref="legacy-algorithm"/>
+        <constructor-arg value="${legacy.contentDir}"/>
+      </bean>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.dto.foxml.FOXMLReader"/>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.dto.foxml.FOXMLWriter"/>
+    </constructor-arg>
+  </bean>
+  <bean id="legacy-algorithm"
+      class="com.github.cwilper.fcrepo.store.legacy.TimestampPathAlgorithm"/>
+  <bean id="legacy-db"
+      class="com.github.cwilper.fcrepo.store.legacy.TemporaryDerbyDB"/>
+</beans>

@@ -37,7 +37,13 @@ public class FilesystemFileStore extends AbstractFileStore {
     @Override
     public OutputStream getFileOutputStream(String path) {
         try {
-            return new FileOutputStream(getFile(path, false));
+            File file = getFile(path, false);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists() && !parentDir.mkdirs()) {
+                throw new StoreException("Unable to create directory: "
+                        + parentDir);
+            }
+            return new FileOutputStream(file);
         } catch (IOException e) {
             throw new StoreException("Error getting output stream", e);
         }

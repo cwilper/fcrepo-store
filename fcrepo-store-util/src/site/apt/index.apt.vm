@@ -1,0 +1,8 @@
+  ---
+  About
+  ---
+
+About ${artifactId}
+
+  For more information, see {{{./usage.html}Usage}} and
+{{{./apidocs/index.html}Javadocs}}.

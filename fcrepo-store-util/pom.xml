@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.cwilper.fcrepo-store</groupId>
+    <artifactId>fcrepo-store</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>fcrepo-store-util</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.cwilper.fcrepo-misc</groupId>
+      <artifactId>fcrepo-dto-foxml</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.cwilper.fcrepo-store</groupId>
+      <artifactId>fcrepo-store-akubra</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.cwilper.fcrepo-store</groupId>
+      <artifactId>fcrepo-store-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.cwilper.fcrepo-store</groupId>
+      <artifactId>fcrepo-store-legacy</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.cwilper</groupId>
+      <artifactId>ttff</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.akubraproject</groupId>
+      <artifactId>akubra-fs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.akubraproject</groupId>
+      <artifactId>akubra-map</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <mainClass>com.github.cwilper.fcrepo.store.util.StoreUtil</mainClass>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/install.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
