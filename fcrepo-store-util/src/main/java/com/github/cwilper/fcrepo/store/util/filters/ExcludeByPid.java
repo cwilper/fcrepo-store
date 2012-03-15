@@ -23,10 +23,9 @@ public class ExcludeByPid extends AbstractFilter<FedoraObject> {
 
     @Override
     public FedoraObject accept(FedoraObject object) throws IOException {
-        if (pids.contains(object.pid())) {
+        if (!pids.contains(object.pid())) {
             return object;
-        } else {
-            return null;
         }
+        return null;
     }
 }
