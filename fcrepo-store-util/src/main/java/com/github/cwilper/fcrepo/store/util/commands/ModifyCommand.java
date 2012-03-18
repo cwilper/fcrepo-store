@@ -8,19 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Lists each {@link FedoraObject}s in the given {@link FedoraStore}.
+ * Modifies {@link FedoraObject}s in a given {@link FedoraStore}.
  */
-public class ListCommand extends FilteringBatchObjectCommand {
+public class ModifyCommand extends FilteringBatchObjectCommand {
     private static final Logger logger =
-            LoggerFactory.getLogger(ListCommand.class);
+            LoggerFactory.getLogger(ModifyCommand.class);
 
-    public ListCommand(FedoraStore source, IdSpec pids,
+    public ModifyCommand(FedoraStore source, IdSpec pids,
             Filter<FedoraObject> filter) {
         super(source, pids, filter);
     }
 
     @Override
     protected void handleFilteredObject(FedoraObject object) {
-        logger.info(object.pid());
+        source.updateObject(object);
+        logger.info("Modified object {}", object.pid());
     }
 }

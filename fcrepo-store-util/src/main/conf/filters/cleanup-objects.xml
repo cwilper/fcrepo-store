@@ -4,12 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
-  <bean id="exclude-builtin-objects"
-      class="com.github.cwilper.fcrepo.store.util.filters.ExcludeByPid">
+  <bean id="cleanup-objects" class="com.github.cwilper.ttff.Filters"
+      factory-method="and">
     <constructor-arg>
-      <bean class="com.github.cwilper.fcrepo.store.util.PIDSpec">
-        <constructor-arg value="fedora-system:ContentModel-3.0,fedora-system:FedoraObject-3.0,fedora-system:ServiceDefinition-3.0,fedora-system:ServiceDeployment-3.0"/>
-      </bean>
+      <list>
+        <ref bean="remove-datastreams"/>
+        <ref bean="remove-old-versions"/>
+      </list>
     </constructor-arg>
   </bean>
 </beans>

@@ -4,48 +4,59 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
-  <!--
+  <description><![CDATA[
     Command: copy
 
     Purpose:
       Copy objects from one store to another, with or without managed
-      datastream content. The specified filter may modify or omit objects.
+      datastream content. The specified filter may modify or omit objects
+      along the way.
 
     Usage:
-      > copy <source> <pids> <filter> <with-content> <destination>
+      > fcsu copy <source> <destination> [options]
 
-    Where:
-      <source> is the id of the source FedoraStore (see stores/*.xml)
-      <pids>   is either a) one or more literal pids, comma-separated.
-                         b) the path to a file containing pids, one per line.
-                         c) 'all', meaning all objects.
-      <filter> is either a) 'unfiltered', meaning no filtering will be applied.
-                         b) the id of any other Filter<FedoraObject>
-                            (see filters/*.xml)
-      <with-content> is true if managed datastream content should be copied;
-                     false otherwise
-      <overwrite>    is true if existing objects in the destination should be
-                     replaced, false if they should be left alone.
-      <destination>  is the id of the destination FedoraStore
+    Arguments:
+            <source>   the source store id.
+
+       <destination>   the destination store id.
+
+    Options:
+              --pids   a list of pids (comma-separated), or the path of a file
+                       that contains a list of pids (one per line), or 'all'.
+                       Default is 'all'.
+
+            --filter   object filter to use. Default is 'unfiltered'.
+
+           --content   whether managed content should be copied.
+                       Default is 'true'.
+
+           --replace   whether existing objects in the destination should be
+                       replaced. Default is 'false'.
 
     Examples:
-      Copy all objects and content from 'legacy' to 'akubra'.
-        > copy legacy all unfiltered true akubra
+      Copy all objects, including content from 'legacy' to 'akubra', without
+      overwriting any pre-existing objects:
 
-      Copy two specific objects, omitting content, from 'legacy' to 'akubra'
-        > copy legacy demo:Object1,demo:Object2 unfiltered false akubra
-  -->
+        > fcsu copy legacy akubra
+
+      Copy two specific objects, omitting content, from 'legacy' to 'akubra',
+      overwriting any pre-existing objects:
+
+        > fcsu copy legacy akubra --pids=demo:Obj1,demo:Obj2 --content=false \
+               --replace=true
+  ]]>
+  </description>
   <bean id="copy"
       class="com.github.cwilper.fcrepo.store.util.commands.CopyCommand">
     <constructor-arg ref="${arg1}"/>
+    <constructor-arg ref="${arg2}"/>
     <constructor-arg>
-      <bean class="com.github.cwilper.fcrepo.store.util.PIDSpec">
-        <constructor-arg value="${arg2}"/>
+      <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">
+        <constructor-arg value="${pids}"/>
       </bean>
     </constructor-arg>
-    <constructor-arg ref="${arg3}"/>
-    <constructor-arg type="boolean" value="${arg4}"/>
-    <constructor-arg type="boolean" value="${arg5}"/>
-    <constructor-arg ref="${arg6}"/>
+    <constructor-arg ref="${filter}"/>
+    <constructor-arg type="boolean" value="${content}"/>
+    <constructor-arg type="boolean" value="${replace}"/>
   </bean>
 </beans>

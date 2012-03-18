@@ -15,9 +15,9 @@ public class StoreUtil {
     
     private static final Logger logger =
             LoggerFactory.getLogger(StoreUtil.class);
-   
-    private final String[] configLocations;
 
+    private final String[] configLocations;
+    
     public StoreUtil(String[] configLocations) {
         this.configLocations = configLocations;
     }
@@ -25,11 +25,15 @@ public class StoreUtil {
     public void execute(String[] args) throws StoreException {
         if (args.length == 0)
             throw new IllegalArgumentException("At least one arg required");
+        int j = 1;
         for (int i = 1; i < args.length; i++) {
-            System.setProperty("arg" + i, args[i]);
-        }
-        for (int i = args.length; i < 20; i++) {
-            System.setProperty("arg" + i, "required-argument-missing");
+            if (args[i].startsWith("--")) {
+                String[] nv = args[i].substring(2).split("=");
+                System.setProperty(nv[0], nv[1]);
+            } else {
+                System.setProperty("arg" + j, args[i]);
+                j++;
+            }
         }
 
         ClassPathXmlApplicationContext context =
@@ -47,7 +51,9 @@ public class StoreUtil {
             new StoreUtil(DEFAULT_CONFIG_LOCATIONS).execute(args);
         } catch (Throwable th) {
             String message = th.getMessage();
-            if (message.contains("required-argument-missing")) {
+            if (message == null) {
+                logger.error("", th);
+            } else if (message.contains("required-argument-missing")) {
                 message = "Required argument missing for command";
             } else if (message.startsWith("No bean named '" + args[0] + "'")) {
                 message = "No such command: " + args[0];

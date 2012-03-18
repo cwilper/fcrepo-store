@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+  <bean id="remove-old-versions"
+        class="com.github.cwilper.fcrepo.store.util.filters.FilterDatastreams">
+    <constructor-arg>
+      <bean class="com.github.cwilper.ttff.Filters" factory-method="or">
+        <constructor-arg>
+          <list>
+            <bean class="com.github.cwilper.ttff.Filters" factory-method="and">
+              <constructor-arg>
+                <list>
+                  <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.IfIdMatches">
+                    <constructor-arg value="${old-datastream-ids}"/>
+                  </bean>
+                  <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.RemoveOldVersions"/>
+                </list>
+              </constructor-arg>
+            </bean>
+            <ref bean="unfiltered-ds"/>
+          </list>
+        </constructor-arg>
+      </bean>
+    </constructor-arg>
+  </bean>
+</beans>

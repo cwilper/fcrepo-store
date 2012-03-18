@@ -4,11 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
-  <bean id="unfiltered"
-      class="com.github.cwilper.fcrepo.store.util.filters.IfPidMatches">
+  <bean id="remove-datastreams"
+      class="com.github.cwilper.fcrepo.store.util.filters.FilterDatastreams">
     <constructor-arg>
-      <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">
-        <constructor-arg value="all"/>
+      <bean class="com.github.cwilper.ttff.Filters" factory-method="not">
+        <constructor-arg>
+          <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.IfIdMatches">
+            <constructor-arg value="${remove-datastream-ids}"/>
+          </bean>
+        </constructor-arg>
       </bean>
     </constructor-arg>
   </bean>

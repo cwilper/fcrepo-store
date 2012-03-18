@@ -17,7 +17,11 @@
   -->
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location" value="classpath:config.properties"/>
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
   </bean>
+  
+  <bean id="contentResolver" class="com.github.cwilper.fcrepo.dto.core.io.DefaultContentResolver"/>
 
   <import resource="classpath*:commands/*.xml"/>
   <import resource="classpath*:filters/*.xml"/>

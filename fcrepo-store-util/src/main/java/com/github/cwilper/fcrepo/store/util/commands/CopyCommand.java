@@ -6,7 +6,7 @@ import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.store.core.ExistsException;
 import com.github.cwilper.fcrepo.store.core.FedoraStore;
-import com.github.cwilper.fcrepo.store.util.PIDSpec;
+import com.github.cwilper.fcrepo.store.util.IdSpec;
 import com.github.cwilper.ttff.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +24,14 @@ public class CopyCommand extends FilteringBatchObjectCommand {
     private final boolean withContent;
     private final boolean overwrite;
     
-    public CopyCommand(FedoraStore source, PIDSpec pids,
-            Filter<FedoraObject> filter, boolean withContent,
-            boolean overwrite, FedoraStore destination) {
+    public CopyCommand(FedoraStore source, FedoraStore destination,
+            IdSpec pids, Filter<FedoraObject> filter, boolean withContent,
+            boolean overwrite) {
         super(source, pids, filter);
+        this.destination = destination;
         this.withContent = withContent;
         this.overwrite = overwrite;
-        this.destination = destination;
+        CommandContext.setDestination(destination);
     }
 
     @Override

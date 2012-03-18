@@ -5,13 +5,14 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
   <description><![CDATA[
-    Command: list
+    Command: modify
 
     Purpose:
-      List objects in the given store. The specified filter may omit objects.
+      Modify objects in a store. The specified filter determines which objects
+      are modified and how.
 
     Usage:
-      > fcsu list <store>
+      > fcsu modify <store> [options]
 
     Arguments:
              <store>   the store id.
@@ -23,17 +24,19 @@
 
             --filter   object filter to use. Default is 'unfiltered'.
 
-
     Examples:
-      List all objects in the 'legacy' store.
-        > fcsu list legacy
+      Read and write all objects without changing them:
+        > fcsu modify akubra
 
-      Determine whether a specific object is present in the 'akubra' store.
-        > fcsu list akubra --pids=demo:Obj1
+      Remove the audit trail from all objects:
+        > fcsu modify akubra --filter=remove-audit-trail
+
+      Remove the audit trail and old datastream versions from all demo objects:
+        > fcsu modify akubra --filter=cleanup-demo-objects
   ]]>
   </description>
-  <bean id="list"
-      class="com.github.cwilper.fcrepo.store.util.commands.ListCommand">
+  <bean id="modify"
+      class="com.github.cwilper.fcrepo.store.util.commands.ModifyCommand">
     <constructor-arg ref="${arg1}"/>
     <constructor-arg>
       <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">

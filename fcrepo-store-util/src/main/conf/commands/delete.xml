@@ -5,13 +5,13 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
   <description><![CDATA[
-    Command: list
+    Command: delete
 
     Purpose:
-      List objects in the given store. The specified filter may omit objects.
+      Removes objects and associated managed content in a store.
 
     Usage:
-      > fcsu list <store>
+      > fcsu delete <store>
 
     Arguments:
              <store>   the store id.
@@ -23,17 +23,19 @@
 
             --filter   object filter to use. Default is 'unfiltered'.
 
-
     Examples:
-      List all objects in the 'legacy' store.
-        > fcsu list legacy
+      Remove all objects in 'akubra':
+        > fcsu delete akubra
 
-      Determine whether a specific object is present in the 'akubra' store.
-        > fcsu list akubra --pids=demo:Obj1
+      Remove all objects in 'akubra' except the built-in system objects:
+        > fcsu delete akubra --filter=exclude-builtin-objects
+
+      Remove two specific objects in 'akubra':
+        > fcsu delete akubra --pids=demo:Obj1,demo:Obj2
   ]]>
   </description>
-  <bean id="list"
-      class="com.github.cwilper.fcrepo.store.util.commands.ListCommand">
+  <bean id="delete"
+      class="com.github.cwilper.fcrepo.store.util.commands.DeleteCommand">
     <constructor-arg ref="${arg1}"/>
     <constructor-arg>
       <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">

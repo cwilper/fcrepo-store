@@ -4,9 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
-  <bean id="exclude-demo-objects"
-      class="com.github.cwilper.ttff.Filters"
-      factory-method="not">
-    <constructor-arg ref="include-demo-objects"/>
+  <bean id="unfiltered-ds"
+      class="com.github.cwilper.fcrepo.store.util.filters.ds.IfIdMatches">
+    <constructor-arg>
+      <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">
+        <constructor-arg value="all"/>
+      </bean>
+    </constructor-arg>
   </bean>
 </beans>
