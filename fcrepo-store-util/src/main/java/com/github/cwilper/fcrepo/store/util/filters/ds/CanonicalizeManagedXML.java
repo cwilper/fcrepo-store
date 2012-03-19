@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+// also sets the size based on the canonicalized byte count
 public class CanonicalizeManagedXML extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(CanonicalizeManagedXML.class);
@@ -37,9 +38,8 @@ public class CanonicalizeManagedXML extends MultiVersionFilter {
             byte[] cBytes;
             try {
                 byte[] oBytes = IOUtils.toByteArray(inputStream);
-                logger.info("Orig:\n" + new String(oBytes, "UTF-8"));
                 cBytes = XMLUtil.canonicalize(oBytes);
-                logger.info("Canonicalized:\n" + new String(cBytes, "UTF-8"));
+                dsv.size((long) cBytes.length);
             } finally {
                 IOUtils.closeQuietly(inputStream);
             }
