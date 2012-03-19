@@ -21,6 +21,6 @@ public class ListCommand extends FilteringBatchObjectCommand {
 
     @Override
     protected void handleFilteredObject(FedoraObject object) {
-        logger.info(object.pid());
+        logger.info("Processed {}", object.pid());
     }
 }

@@ -22,6 +22,6 @@ public class DeleteCommand extends FilteringBatchObjectCommand {
     @Override
     protected void handleFilteredObject(FedoraObject object) {
         source.deleteObject(object.pid());
-        logger.info("Deleted object {}", object.pid());
+        logger.info("Deleted {}", object.pid());
     }
 }

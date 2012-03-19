@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
-  <bean id="check-fixity"
+  <bean id="list-datastreams"
       class="com.github.cwilper.fcrepo.store.util.filters.FilterDatastreams">
     <constructor-arg>
       <bean class="com.github.cwilper.ttff.Filters" factory-method="and">
@@ -24,10 +24,9 @@
                 </bean>
               </constructor-arg>
             </bean>
-            <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.CheckFixity">
+            <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.ListDatastreams">
+              <constructor-arg type="boolean" value="false"/>
               <constructor-arg type="boolean" value="${all-datastream-versions}"/>
-              <constructor-arg ref="contentResolver"/>
-              <constructor-arg value="${local.fedora.server}"/>
             </bean>
           </list>
         </constructor-arg>

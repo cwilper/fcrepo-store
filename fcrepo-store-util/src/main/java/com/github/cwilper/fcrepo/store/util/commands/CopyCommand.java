@@ -38,14 +38,14 @@ public class CopyCommand extends FilteringBatchObjectCommand {
     protected void handleFilteredObject(FedoraObject object) {
         try {
             destination.addObject(object);
-            logger.info("Copied object {}", object.pid());
+            logger.info("Copied {}", object.pid());
         } catch (ExistsException e) {
             if (overwrite) {
                 destination.updateObject(object);
-                logger.info("Replaced object {}",
+                logger.info("Replaced {}",
                         object.pid());
             } else {
-                logger.info("Skipped object {} (exists in destination)",
+                logger.info("Skipped {} (exists in destination)",
                         object.pid());
                 return;
             }
@@ -62,7 +62,7 @@ public class CopyCommand extends FilteringBatchObjectCommand {
                             destination.setContent(
                                     object.pid(), datastream.id(),
                                     version.id(), content);
-                            logger.info("Copied content {}", info);
+                            logger.info("Copied content of {}", info);
                         }
                     }
                 }

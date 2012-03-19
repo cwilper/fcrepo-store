@@ -22,6 +22,6 @@ public class ModifyCommand extends FilteringBatchObjectCommand {
     @Override
     protected void handleFilteredObject(FedoraObject object) {
         source.updateObject(object);
-        logger.info("Modified object {}", object.pid());
+        logger.info("Modified {}", object.pid());
     }
 }

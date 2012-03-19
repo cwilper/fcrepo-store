@@ -30,7 +30,7 @@ public abstract class BatchObjectCommand implements Command {
                 if (pids.matches(object.pid())) {
                     handleObject(object);
                 } else {
-                    logger.debug("Skipped object {} (pid filtered out)",
+                    logger.debug("Skipped {} (pid filtered out)",
                             object.pid());
                 }
             }
@@ -39,7 +39,7 @@ public abstract class BatchObjectCommand implements Command {
                 try {
                     handleObject(source.getObject(pid));
                 } catch (NotFoundException e) {
-                    logger.warn("Skipped object {} (does not exist in source)",
+                    logger.warn("Skipped {} (does not exist in source)",
                             pid);
                 }
             }

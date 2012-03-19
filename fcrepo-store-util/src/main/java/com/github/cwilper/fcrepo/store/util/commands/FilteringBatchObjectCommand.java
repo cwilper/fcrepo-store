@@ -31,12 +31,12 @@ public abstract class FilteringBatchObjectCommand
         try {
             object = filter.accept(object);
             if (object == null) {
-                logger.debug("Skipped object {} (filtered out)", pid);
+                logger.debug("Skipped {} (filtered out)", pid);
             } else {
                 handleFilteredObject(object);
             }
         } catch (IOException e) {
-            logger.warn("Skipped object {} (error filtering)" + pid, e);
+            logger.warn("Skipped {} (error filtering)" + pid, e);
         }
     }
 
