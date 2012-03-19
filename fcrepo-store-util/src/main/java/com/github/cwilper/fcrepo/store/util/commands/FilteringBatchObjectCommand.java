@@ -22,7 +22,8 @@ public abstract class FilteringBatchObjectCommand
             IdSpec pids, Filter<FedoraObject> filter) {
         super(source, pids);
         this.filter = filter;
-        CommandContext.setSource(source); // make source available to filters
+        CommandContext.setSource(source);
+        CommandContext.setDestination(source);
     }
 
     @Override

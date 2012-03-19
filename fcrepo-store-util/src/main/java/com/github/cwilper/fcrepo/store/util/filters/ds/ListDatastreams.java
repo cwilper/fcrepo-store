@@ -7,6 +7,8 @@ import com.github.cwilper.fcrepo.store.util.commands.CommandContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 public class ListDatastreams extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(ListDatastreams.class);
@@ -20,7 +22,7 @@ public class ListDatastreams extends MultiVersionFilter {
     }
 
     @Override
-    public Datastream accept(Datastream ds) {
+    public Datastream accept(Datastream ds) throws IOException {
         String info = CommandContext.getObject().pid() + "/" + ds.id();
         if (includeVersions) {
             super.accept(ds);

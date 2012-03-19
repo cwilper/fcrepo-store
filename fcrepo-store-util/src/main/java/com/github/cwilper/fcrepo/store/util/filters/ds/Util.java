@@ -22,6 +22,11 @@ class Util {
     private static final Logger logger = LoggerFactory.getLogger(Util.class);
 
     private Util() { }
+    
+    static boolean isXML(String mimeType) {
+        return mimeType != null &&
+                (mimeType.endsWith("/xml") || mimeType.endsWith("+xml"));
+    }
 
     static InputStream getInputStream(String info, String pid, Datastream ds,
             DatastreamVersion dsv, ContentResolver contentResolver,

@@ -17,6 +17,9 @@ public class ListCommand extends FilteringBatchObjectCommand {
     public ListCommand(FedoraStore source, IdSpec pids,
             Filter<FedoraObject> filter) {
         super(source, pids, filter);
+        // if a content-modifying filter is accidently used with this
+        // command, prevent it from writing
+        CommandContext.setDestination(null);
     }
 
     @Override
