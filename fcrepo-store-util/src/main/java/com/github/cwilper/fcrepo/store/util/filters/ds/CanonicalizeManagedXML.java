@@ -1,10 +1,12 @@
 package com.github.cwilper.fcrepo.store.util.filters.ds;
 
+import com.github.cwilper.fcrepo.dto.core.ContentDigest;
 import com.github.cwilper.fcrepo.dto.core.ControlGroup;
 import com.github.cwilper.fcrepo.dto.core.Datastream;
 import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.XMLUtil;
+import com.github.cwilper.fcrepo.store.core.FedoraStore;
 import com.github.cwilper.fcrepo.store.util.commands.CommandContext;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -14,7 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-// also sets the size based on the canonicalized byte count
+// also sets size attribute. digest will be re-set if one is already defined.
 public class CanonicalizeManagedXML extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(CanonicalizeManagedXML.class);
@@ -22,11 +24,12 @@ public class CanonicalizeManagedXML extends MultiVersionFilter {
     public CanonicalizeManagedXML(boolean allDatastreamVersions) {
         super(allDatastreamVersions);
     }
-
+    
     @Override
     protected void handleVersion(FedoraObject object, Datastream ds,
             DatastreamVersion dsv) throws IOException {
-        if (CommandContext.getDestination() == null) {
+        FedoraStore destination = CommandContext.getDestination();
+        if (destination == null) {
             throw new UnsupportedOperationException("Filter requires content "
                     + "write access, but this is a read-only command");
         }
@@ -40,10 +43,18 @@ public class CanonicalizeManagedXML extends MultiVersionFilter {
                 byte[] oBytes = IOUtils.toByteArray(inputStream);
                 cBytes = XMLUtil.canonicalize(oBytes);
                 dsv.size((long) cBytes.length);
+                ContentDigest digest = dsv.contentDigest();
+                if (digest != null) {
+                    digest.hexValue(Util.computeFixity(
+                            new ByteArrayInputStream(cBytes),
+                            digest.type())[1]);
+                }
             } finally {
                 IOUtils.closeQuietly(inputStream);
             }
-            CommandContext.getDestination().setContent(object.pid(), ds.id(),
+            Util.putObjectIfNoSuchManagedDatastream(object, destination,
+                    ds.id());
+            destination.setContent(object.pid(), ds.id(),
                     dsv.id(), new ByteArrayInputStream(cBytes));
             logger.info("Canonicalized {}", info);
         }

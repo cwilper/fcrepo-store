@@ -36,12 +36,13 @@ public abstract class BatchObjectCommand implements Command {
             }
         } else {
             for (String pid : pids) {
+                FedoraObject object = null;
                 try {
-                    handleObject(source.getObject(pid));
+                    object = source.getObject(pid);
                 } catch (NotFoundException e) {
-                    logger.warn("Skipped {} (does not exist in source)",
-                            pid);
+                    logger.warn("Skipped {} (not in source)", pid);
                 }
+                if (object != null) handleObject(object);
             }
         }
     }

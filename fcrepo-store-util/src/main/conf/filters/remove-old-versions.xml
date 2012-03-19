@@ -16,6 +16,13 @@
                   <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.IfIdMatches">
                     <constructor-arg value="${old-datastream-ids}"/>
                   </bean>
+                  <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.IfControlGroupMatches">
+                    <constructor-arg>
+                      <bean class="com.github.cwilper.fcrepo.store.util.IdSpec">
+                        <constructor-arg value="${control-groups}"/>
+                      </bean>
+                    </constructor-arg>
+                  </bean>
                   <bean class="com.github.cwilper.fcrepo.store.util.filters.ds.RemoveOldVersions"/>
                 </list>
               </constructor-arg>

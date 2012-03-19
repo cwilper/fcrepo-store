@@ -6,6 +6,7 @@ import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.store.core.ExistsException;
 import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.NotFoundException;
 import com.github.cwilper.fcrepo.store.util.IdSpec;
 import com.github.cwilper.ttff.Filter;
 import org.slf4j.Logger;
@@ -54,15 +55,21 @@ public class CopyCommand extends FilteringBatchObjectCommand {
             for (Datastream datastream : object.datastreams().values()) {
                 if (datastream.controlGroup() == ControlGroup.MANAGED) {
                     for (DatastreamVersion version : datastream.versions()) {
-                        InputStream content = source.getContent(
-                                object.pid(), datastream.id(), version.id());
                         String info = object.pid() + "/" + datastream.id() +
                                 "/" + version.id();
-                        if (content != null) {
-                            destination.setContent(
+                        try {
+                            InputStream content = source.getContent(
                                     object.pid(), datastream.id(),
-                                    version.id(), content);
-                            logger.info("Copied content of {}", info);
+                                    version.id());
+                            if (content != null) {
+                                destination.setContent(
+                                        object.pid(), datastream.id(),
+                                        version.id(), content);
+                                logger.info("Copied content of {}", info);
+                            }
+                        } catch (NotFoundException e) {
+                            logger.debug(
+                                    "Skipped content of {} (not in source)");
                         }
                     }
                 }
