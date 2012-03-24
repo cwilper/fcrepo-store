@@ -5,15 +5,14 @@ import com.github.cwilper.fcrepo.dto.core.io.DTOReader;
 import com.github.cwilper.fcrepo.dto.core.io.DTOWriter;
 import com.github.cwilper.fcrepo.store.core.ExistsException;
 import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
+import com.github.cwilper.fcrepo.store.core.NotFoundException;
 import com.github.cwilper.fcrepo.store.core.StoreException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.Binary;
-import javax.jcr.Credentials;
 import javax.jcr.Node;
-import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import java.io.ByteArrayInputStream;
@@ -29,40 +28,37 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
     private static final Logger logger =
             LoggerFactory.getLogger(JCRFedoraStoreSession.class);
 
-    private final Repository repository;
-    private final Credentials credentials;
+    private final Session session;
     private final DTOReader readerFactory;
     private final DTOWriter writerFactory;
 
-    public JCRFedoraStoreSession(Repository repository, Credentials credentials,
-            DTOReader readerFactory, DTOWriter writerFactory) {
-        if (repository == null || credentials == null || readerFactory == null
-                || writerFactory == null)
+    private boolean closed;
+
+    public JCRFedoraStoreSession(Session session, DTOReader readerFactory,
+            DTOWriter writerFactory) {
+        if (session == null || readerFactory == null || writerFactory == null)
             throw new NullPointerException();
-        this.repository = repository;
-        this.credentials = credentials;
+        this.session = session;
         this.readerFactory = readerFactory;
         this.writerFactory = writerFactory;
+        this.closed = false;
     }
 
     @Override
     public void addObject(FedoraObject object) {
         if (object == null) throw new NullPointerException();
         if (object.pid() == null) throw new IllegalArgumentException();
-        Session session = Util.getSession(repository, credentials);
         try {
             String objectPath = getObjectPath(object.pid());
             if (session.nodeExists(objectPath)) {
                 throw new ExistsException("Object already exists: "
                         + object.pid());
             }
-            Node folder = mkdirs(session, objectPath);
-            addFile(folder, "object", getBinaryValue(session, object));
+            Node folder = mkdirs(objectPath);
+            addFile(folder, "object", getBinaryValue(object));
             session.save();
         } catch (RepositoryException e) {
             throw new StoreException("Error adding object", e);
-        } finally {
-            session.logout();
         }
     }
     
@@ -72,7 +68,7 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
                 hex.charAt(3) + "/" + pid.replaceFirst(":", "_");
     }
     
-    private Binary getBinaryValue(Session session, FedoraObject object) {
+    private Binary getBinaryValue(FedoraObject object) {
         DTOWriter writer = writerFactory.getInstance();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
@@ -97,8 +93,7 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
         resource.setProperty("jcr:data", value);
     }
     
-    private Node mkdirs(Session session, String path)
-            throws RepositoryException {
+    private Node mkdirs(String path) throws RepositoryException {
         try {
             Node node = session.getRootNode();
             for (String childName : path.split("/")) {
@@ -118,7 +113,28 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
 
     @Override
     public FedoraObject getObject(String pid) {
-        return null;
+        if (pid == null) throw new NullPointerException();
+        try {
+            String objectPath = getObjectPath(pid);
+            if (session.nodeExists(objectPath)) {
+                Node content = session.getNode(objectPath +
+                        "/object/jcr:content");
+                Binary binary = content.getProperty("jcr:data").getBinary();
+                DTOReader reader = readerFactory.getInstance();
+                try {
+                    return reader.readObject(binary.getStream());
+                } catch (IOException e) {
+                    throw new StoreException("Error reading object", e);
+                } finally {
+                    reader.close();
+                }
+            } else {
+                throw new NotFoundException("No such object: " + pid);
+            }
+        } catch (RepositoryException e) {
+            throw new StoreException("Error getting object", e);
+        }
+        
     }
 
     @Override
@@ -148,6 +164,10 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
 
     @Override
     public void close() {
+        if (!closed) {
+            session.logout();
+            closed = true;
+        }
     }
 
     @Override
