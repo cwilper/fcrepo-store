@@ -43,6 +43,7 @@
   <modules>
     <module>fcrepo-store-akubra</module>
     <module>fcrepo-store-core</module>
+    <module>fcrepo-store-jcr</module>
     <module>fcrepo-store-legacy</module>
     <module>fcrepo-store-util</module>
   </modules>
@@ -124,6 +125,12 @@
       </dependency>
 
       <dependency>
+        <groupId>javax.jcr</groupId>
+        <artifactId>jcr</artifactId>
+        <version>2.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.2</version>
@@ -157,6 +164,12 @@
         <groupId>org.apache.derby</groupId>
         <artifactId>derby</artifactId>
         <version>10.8.2.2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-core</artifactId>
+        <version>2.4.0</version>
       </dependency>
 
       <dependency>
