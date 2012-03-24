@@ -4,7 +4,7 @@ import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.DTOReader;
 import com.github.cwilper.fcrepo.dto.core.io.DTOWriter;
 import com.github.cwilper.fcrepo.store.core.ExistsException;
-import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
 import com.github.cwilper.fcrepo.store.core.StoreException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -23,18 +23,18 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 /**
- * JCR-based {@link FedoraStore} implementation.
+ * JCR-based {@link com.github.cwilper.fcrepo.store.core.FedoraStoreSession} implementation.
  */
-public class JCRFedoraStore implements FedoraStore {
+public class JCRFedoraStoreSession implements FedoraStoreSession {
     private static final Logger logger =
-            LoggerFactory.getLogger(JCRFedoraStore.class);
+            LoggerFactory.getLogger(JCRFedoraStoreSession.class);
 
     private final Repository repository;
     private final Credentials credentials;
     private final DTOReader readerFactory;
     private final DTOWriter writerFactory;
 
-    public JCRFedoraStore(Repository repository, Credentials credentials,
+    public JCRFedoraStoreSession(Repository repository, Credentials credentials,
             DTOReader readerFactory, DTOWriter writerFactory) {
         if (repository == null || credentials == null || readerFactory == null
                 || writerFactory == null)
@@ -144,6 +144,10 @@ public class JCRFedoraStore implements FedoraStore {
     @Override
     public void setContent(String pid, String datastreamId,
             String datastreamVersionId, InputStream inputStream) {
+    }
+
+    @Override
+    public void close() {
     }
 
     @Override

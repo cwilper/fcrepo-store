@@ -6,7 +6,7 @@ import com.github.cwilper.fcrepo.dto.core.Datastream;
 import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.XMLUtil;
-import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
 import com.github.cwilper.fcrepo.store.util.commands.CommandContext;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class CanonicalizeManagedXML extends MultiVersionFilter {
     @Override
     protected void handleVersion(FedoraObject object, Datastream ds,
             DatastreamVersion dsv) throws IOException {
-        FedoraStore destination = CommandContext.getDestination();
+        FedoraStoreSession destination = CommandContext.getDestination();
         if (destination == null) {
             throw new UnsupportedOperationException("Filter requires content "
                     + "write access, but this is a read-only command");

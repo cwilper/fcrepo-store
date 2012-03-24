@@ -5,7 +5,7 @@ import com.github.cwilper.fcrepo.dto.core.ControlGroup;
 import com.github.cwilper.fcrepo.dto.core.Datastream;
 import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
-import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
 import com.github.cwilper.fcrepo.store.core.StoreException;
 import com.github.cwilper.fcrepo.store.util.commands.CommandContext;
 import com.github.cwilper.ttff.AbstractFilter;
@@ -23,7 +23,7 @@ public class InlineToManagedXML extends AbstractFilter<Datastream> {
 
     @Override
     public Datastream accept(Datastream datastream) throws IOException {
-        FedoraStore destination = CommandContext.getDestination();
+        FedoraStoreSession destination = CommandContext.getDestination();
         if (destination == null) {
             throw new UnsupportedOperationException("Filter requires content "
                     + "write access, but this is a read-only command");

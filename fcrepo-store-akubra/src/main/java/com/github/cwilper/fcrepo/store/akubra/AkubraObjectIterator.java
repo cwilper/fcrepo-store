@@ -12,13 +12,12 @@ import java.net.URI;
 import java.util.Iterator;
 
 /**
- * An iterator of {@link FedoraObject}s that automatically closes a given
- * {@link BlobStoreConnection} when finished.
+ * An iterator of {@link FedoraObject}s in an Akubra blob store.
  */
-class ConnectionClosingObjectIterator
+class AkubraObjectIterator
         extends AbstractIterator<FedoraObject> {
     private static final Logger logger =
-            LoggerFactory.getLogger(ConnectionClosingObjectIterator.class);
+            LoggerFactory.getLogger(AkubraObjectIterator.class);
 
     private final BlobStoreConnection connection;
     private final Iterator<URI> ids;
@@ -31,7 +30,7 @@ class ConnectionClosingObjectIterator
      * @param ids the blob ids of the Fedora objects to iterate.
      * @param readerFactory the factory to use to deserialize the objects.
      */
-    public ConnectionClosingObjectIterator(BlobStoreConnection connection,
+    public AkubraObjectIterator(BlobStoreConnection connection,
             Iterator<URI> ids, DTOReader readerFactory) {
         this.connection = connection;
         this.ids = ids;
@@ -49,17 +48,7 @@ class ConnectionClosingObjectIterator
                 logger.warn(Constants.ERR_PARSING_OBJ + ": " + id, e);
             }
         }
-        connection.close();
         return endOfData();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            super.finalize();
-        } finally {
-            connection.close();
-        }
     }
 }
 

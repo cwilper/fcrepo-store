@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Lists each {@link FedoraObject}s in the given {@link FedoraStore}.
+ * Lists each {@link FedoraObject}s in the given {@link com.github.cwilper.fcrepo.store.core.FedoraStoreSession}.
  */
 public class ListCommand extends FilteringBatchObjectCommand {
     private static final Logger logger =
@@ -16,7 +16,7 @@ public class ListCommand extends FilteringBatchObjectCommand {
 
     public ListCommand(FedoraStore source, IdSpec pids,
             Filter<FedoraObject> filter) {
-        super(source, pids, filter);
+        super(source.getSession(), pids, filter);
         // if a content-modifying filter is accidently used with this
         // command, prevent it from writing
         CommandContext.setDestination(null);

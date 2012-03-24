@@ -38,10 +38,12 @@ public class StoreUtil {
 
         ClassPathXmlApplicationContext context =
                 new ClassPathXmlApplicationContext(configLocations);
+        Command command = null;
         try {
-            Command command = context.getBean(args[0], Command.class);
+            command = context.getBean(args[0], Command.class);
             command.execute();
         } finally {
+            if (command != null) command.close();
             context.close();
         }
     }

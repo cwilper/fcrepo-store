@@ -6,7 +6,7 @@ import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 import com.github.cwilper.fcrepo.dto.core.io.ContentResolver;
 import com.github.cwilper.fcrepo.dto.core.io.XMLUtil;
-import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
 import com.github.cwilper.fcrepo.store.core.NotFoundException;
 import com.github.cwilper.fcrepo.store.core.StoreException;
 import com.github.cwilper.fcrepo.store.util.commands.CommandContext;
@@ -103,7 +103,7 @@ class Util {
     // managed datastream -- a prerequisite to putting the content into
     // the store.
     static void putObjectIfNoSuchManagedDatastream(FedoraObject object,
-            FedoraStore store, String datastreamId) {
+            FedoraStoreSession store, String datastreamId) {
         try {
             FedoraObject existing = store.getObject(object.pid());
             Datastream ds = existing.datastreams().get(datastreamId);

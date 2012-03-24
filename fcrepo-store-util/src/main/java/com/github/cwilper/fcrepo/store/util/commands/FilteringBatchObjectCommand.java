@@ -1,7 +1,7 @@
 package com.github.cwilper.fcrepo.store.util.commands;
 
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
-import com.github.cwilper.fcrepo.store.core.FedoraStore;
+import com.github.cwilper.fcrepo.store.core.FedoraStoreSession;
 import com.github.cwilper.fcrepo.store.util.IdSpec;
 import com.github.cwilper.ttff.Filter;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public abstract class FilteringBatchObjectCommand
             LoggerFactory.getLogger(FilteringBatchObjectCommand.class);
     protected final Filter<FedoraObject> filter;
 
-    public FilteringBatchObjectCommand(FedoraStore source,
+    public FilteringBatchObjectCommand(FedoraStoreSession source,
             IdSpec pids, Filter<FedoraObject> filter) {
         super(source, pids);
         this.filter = filter;

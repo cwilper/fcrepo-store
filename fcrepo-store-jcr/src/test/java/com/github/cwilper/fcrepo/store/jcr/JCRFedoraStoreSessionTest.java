@@ -21,9 +21,9 @@ import javax.jcr.SimpleCredentials;
 import java.io.File;
 
 /**
- * Unit tests for {@link JCRFedoraStore}.
+ * Unit tests for {@link JCRFedoraStoreSession}.
  */
-public class JCRFedoraStoreTest {
+public class JCRFedoraStoreSessionTest {
     private static final String EXISTING_PID = "test:existing";
 
     private static final String JCR_CONFIG_PATH = "src/test/resources/repository.xml";
@@ -33,7 +33,7 @@ public class JCRFedoraStoreTest {
     private static TransientRepository repository;
     private static Credentials credentials;
 
-    private JCRFedoraStore testFedoraStore;
+    private JCRFedoraStoreSession testFedoraStore;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -45,13 +45,13 @@ public class JCRFedoraStoreTest {
     
     @Before
     public void setUp() throws Exception {
-        testFedoraStore = new JCRFedoraStore(repository, credentials,
+        testFedoraStore = new JCRFedoraStoreSession(repository, credentials,
                 new FOXMLReader(), new FOXMLWriter());
     }
 
     @Test (expected=NullPointerException.class)
     public void initWithNullRepository() {
-        new JCRFedoraStore(null,
+        new JCRFedoraStoreSession(null,
                 EasyMock.createMock(Credentials.class),
                 EasyMock.createMock(DTOReader.class),
                 EasyMock.createMock(DTOWriter.class));
@@ -59,7 +59,7 @@ public class JCRFedoraStoreTest {
 
     @Test (expected=NullPointerException.class)
     public void initWithNullCredentials() {
-        new JCRFedoraStore(repository,
+        new JCRFedoraStoreSession(repository,
                 null,
                 EasyMock.createMock(DTOReader.class),
                 EasyMock.createMock(DTOWriter.class));
@@ -67,7 +67,7 @@ public class JCRFedoraStoreTest {
 
     @Test (expected=NullPointerException.class)
     public void initWithNullReaderFactory() {
-        new JCRFedoraStore(repository,
+        new JCRFedoraStoreSession(repository,
                 EasyMock.createMock(Credentials.class),
                 null,
                 EasyMock.createMock(DTOWriter.class));
@@ -75,7 +75,7 @@ public class JCRFedoraStoreTest {
 
     @Test (expected=NullPointerException.class)
     public void initWithNullWriterFactory() {
-        new JCRFedoraStore(repository,
+        new JCRFedoraStoreSession(repository,
                 EasyMock.createMock(Credentials.class),
                 EasyMock.createMock(DTOReader.class),
                 null);
