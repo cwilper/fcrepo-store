@@ -28,9 +28,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 /**
- * JCR-based {@link com.github.cwilper.fcrepo.store.core.FedoraStoreSession} implementation.
+ * JCR-based {@link FedoraStoreSession} implementation.
  */
-public class JCRFedoraStoreSession implements FedoraStoreSession {
+class JCRFedoraStoreSession implements FedoraStoreSession {
     private static final Logger logger =
             LoggerFactory.getLogger(JCRFedoraStoreSession.class);
 
@@ -40,7 +40,7 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
 
     private boolean closed;
 
-    public JCRFedoraStoreSession(Session session, DTOReader readerFactory,
+    JCRFedoraStoreSession(Session session, DTOReader readerFactory,
             DTOWriter writerFactory) {
         if (session == null || readerFactory == null || writerFactory == null)
             throw new NullPointerException();

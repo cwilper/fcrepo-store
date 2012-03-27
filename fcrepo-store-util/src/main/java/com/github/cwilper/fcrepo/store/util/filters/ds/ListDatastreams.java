@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Lists each datastream.
+ */
 public class ListDatastreams extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(ListDatastreams.class);

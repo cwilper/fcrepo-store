@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Computes the fixity (size and/or digest) and compares it to the stored
+ * values, reporting on any differences.
+ */
 public class CheckFixity extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(CheckFixity.class);

@@ -16,7 +16,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 
-// also sets size attribute. digest will be re-set if one is already defined.
+/**
+ * Converts inline XML to managed content (which will be canonicalized using
+ * C14N11 rules). Also sets the size and re-computes the digest if one is
+ * already defined.
+ */
 public class InlineToManagedXML extends AbstractFilter<Datastream> {
     private final static Logger logger =
             LoggerFactory.getLogger(InlineToManagedXML.class);

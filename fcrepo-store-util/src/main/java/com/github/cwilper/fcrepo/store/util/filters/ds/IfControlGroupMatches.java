@@ -5,7 +5,7 @@ import com.github.cwilper.fcrepo.store.util.IdSpec;
 import com.github.cwilper.ttff.AbstractFilter;
 
 /**
- * Includes datastreams whose control groups match the given idspec.
+ * Accepts datastreams whose control group matches a given {@link IdSpec}.
  */
 public class IfControlGroupMatches extends AbstractFilter<Datastream> {
     private final IdSpec ids;

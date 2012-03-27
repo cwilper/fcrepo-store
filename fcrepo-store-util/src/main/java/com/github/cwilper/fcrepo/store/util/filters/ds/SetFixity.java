@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Sets the fixity (size and digest) where undefined, or forcibly overwrites
+ * the previously stored fixity values.
+ */
 public class SetFixity extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(SetFixity.class);

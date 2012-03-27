@@ -16,7 +16,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-// also sets size attribute. digest will be re-set if one is already defined.
+/**
+ * Canonicalizes (using C14N11 rules) managed xml. Also sets the size
+ * and re-computes the digest if one is already defined.
+ */
 public class CanonicalizeManagedXML extends MultiVersionFilter {
     private static final Logger logger =
             LoggerFactory.getLogger(CanonicalizeManagedXML.class);

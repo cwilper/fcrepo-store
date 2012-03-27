@@ -6,6 +6,9 @@ import com.github.cwilper.ttff.AbstractFilter;
 
 import java.io.IOException;
 
+/**
+ * Accepts objects whose pids match a given {@link IdSpec}.
+ */
 public class IfPidMatches extends AbstractFilter<FedoraObject> {
     private final IdSpec pids;
 

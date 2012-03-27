@@ -4,6 +4,9 @@ import com.github.cwilper.fcrepo.dto.core.Datastream;
 import com.github.cwilper.fcrepo.dto.core.DatastreamVersion;
 import com.github.cwilper.ttff.AbstractFilter;
 
+/**
+ * Drops all versions of each datastream except the most recent.
+ */
 public class RemoveOldVersions extends AbstractFilter<Datastream> {
     @Override
     public Datastream accept(Datastream datastream) {

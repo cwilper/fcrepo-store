@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Lists each {@link FedoraObject}s in the given {@link com.github.cwilper.fcrepo.store.core.FedoraStoreSession}.
+ * Lists each {@link FedoraObject}s in the given {@link FedoraStore}.
  */
 public class ListCommand extends FilteringBatchObjectCommand {
     private static final Logger logger =

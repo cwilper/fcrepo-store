@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 
 /**
- * Copies {@link FedoraObject}s from one {@link com.github.cwilper.fcrepo.store.core.FedoraStoreSession} to another.
+ * Copies {@link FedoraObject}s from one {@link FedoraStore} to another.
  */
 public class CopyCommand extends FilteringBatchObjectCommand {
     private static final Logger logger =
