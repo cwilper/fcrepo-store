@@ -1,4 +1,9 @@
 com.github.cwilper.fcrepo.store.akubra
 com.github.cwilper.fcrepo.store.core
 com.github.cwilper.fcrepo.store.core.impl
+com.github.cwilper.fcrepo.store.jcr
 com.github.cwilper.fcrepo.store.legacy
+com.github.cwilper.fcrepo.store.util
+com.github.cwilper.fcrepo.store.util.commands
+com.github.cwilper.fcrepo.store.util.filters
+com.github.cwilper.fcrepo.store.util.filters.ds
