@@ -96,6 +96,12 @@
 
       <dependency>
         <groupId>com.github.cwilper.fcrepo-store</groupId>
+        <artifactId>fcrepo-store-jcr</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.cwilper.fcrepo-store</groupId>
         <artifactId>fcrepo-store-legacy</artifactId>
         <version>${pom.version}</version>
       </dependency>
