@@ -25,7 +25,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Iterator;
 
 /**
@@ -167,7 +166,6 @@ public class JCRFedoraStoreSession implements FedoraStoreSession {
         if (pid == null || datastreamId == null ||
                 datastreamVersionId == null || inputStream == null)
             throw new NullPointerException();
-        OutputStream outputStream = null;
         boolean success = false;
         try {
             FedoraObject object = getObject(pid);

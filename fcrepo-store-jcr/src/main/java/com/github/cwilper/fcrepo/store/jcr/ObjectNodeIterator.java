@@ -59,10 +59,6 @@ class ObjectNodeIterator extends AbstractIterator<Node>{
         while (iterator.hasNext()) {
             Node node = iterator.nextNode();
             if (node.getName().length() == 2) {
-                NodeIterator children = node.getNodes();
-                while (children.hasNext()) {
-                    Node child = children.nextNode();
-                }
                 return node;
             }
         }
