@@ -242,17 +242,15 @@ class LegacyFedoraStoreSession implements FedoraStoreSession {
     // if newObject is null, all managed content will be deleted
     private void deleteOldManagedContent(FedoraObject oldObject,
             FedoraObject newObject) {
-        for (Datastream datastream : oldObject.datastreams().values()) {
-            if (datastream.controlGroup() == ControlGroup.MANAGED) {
-                String datastreamId = datastream.id();
-                for (DatastreamVersion datastreamVersion :
-                        datastream.versions()) {
-                    String datastreamVersionId = datastreamVersion.id();
+        for (Datastream ds : oldObject.datastreams().values()) {
+            if (ds.controlGroup() == ControlGroup.MANAGED) {
+                String dsId = ds.id();
+                for (DatastreamVersion dsv : ds.versions()) {
+                    String dsvId = dsv.id();
                     if (newObject == null ||
                             !Util.hasManagedDatastreamVersion(
-                            newObject, datastreamId, datastreamVersionId)) {
-                        deleteContent(oldObject.pid(), datastreamId,
-                                datastreamVersionId);
+                                    newObject, dsId, dsvId)) {
+                        deleteContent(oldObject.pid(), dsId, dsvId);
                     }
                 }
             }

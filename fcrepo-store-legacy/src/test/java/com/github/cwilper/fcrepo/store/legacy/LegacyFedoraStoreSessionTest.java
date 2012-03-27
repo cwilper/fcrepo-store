@@ -31,7 +31,7 @@ public class LegacyFedoraStoreSessionTest {
     private static final String DS1V0_ID = EXISTING_PID + "+DS1+DS1.0";
     private static final String DS2V0_ID = EXISTING_PID + "+DS2+DS2.0";
 
-    private LegacyFedoraStoreSession testSession;
+    private LegacyFedoraStoreSession store;
     private FileStore testObjectStore;
     private FileStore testContentStore;
     
@@ -40,13 +40,13 @@ public class LegacyFedoraStoreSessionTest {
         PathAlgorithm alg = new TimestampPathAlgorithm();
         testObjectStore = new MemoryFileStore(new MemoryPathRegistry(), alg);
         testContentStore = new MemoryFileStore(new MemoryPathRegistry(), alg);
-        testSession = new LegacyFedoraStoreSession(testObjectStore,
+        store = new LegacyFedoraStoreSession(testObjectStore,
                 testContentStore, new FOXMLReader(), new FOXMLWriter());
     }
     
     @After
     public void tearDown() {
-        testSession.close();
+        store.close();
     }
     
     @Test (expected=NullPointerException.class)
@@ -83,12 +83,12 @@ public class LegacyFedoraStoreSessionTest {
 
     @Test (expected=NullPointerException.class)
     public void addObjectNull() {
-        testSession.addObject(null);
+        store.addObject(null);
     }
 
     @Test (expected=IllegalArgumentException.class)
     public void addObjectNoPid() {
-        testSession.addObject(new FedoraObject());
+        store.addObject(new FedoraObject());
     }
 
     @Test (expected=ExistsException.class)
@@ -97,12 +97,12 @@ public class LegacyFedoraStoreSessionTest {
         OutputStream out = testObjectStore.getFileOutputStream(EXISTING_PATH);
         out.write(0);
         out.close();
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
     }
     
     @Test
     public void addObjectNew() throws Exception {
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
         String path = testObjectStore.getPath(EXISTING_PID);
         Assert.assertNotNull(path);
         Assert.assertNotNull(testObjectStore.getFileInputStream(path));
@@ -110,61 +110,61 @@ public class LegacyFedoraStoreSessionTest {
     
     @Test (expected=IllegalStateException.class)
     public void addObjectAfterClose() throws Exception {
-        testSession.close();
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.close();
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
     }
 
     @Test (expected=NullPointerException.class)
     public void getObjectNullPid() {
-        testSession.getObject(null);
+        store.getObject(null);
     }
 
     @Test (expected=NotFoundException.class)
     public void getObjectNonExisting() {
-        testSession.getObject("test:non-existing");
+        store.getObject("test:non-existing");
     }
 
     @Test
     public void getObjectExistingTwice() {
         FedoraObject object = new FedoraObject().pid(EXISTING_PID);
-        testSession.addObject(object);
+        store.addObject(object);
         Assert.assertEquals(object,
-                testSession.getObject(EXISTING_PID));
+                store.getObject(EXISTING_PID));
         Assert.assertEquals(object,
-                testSession.getObject(EXISTING_PID));
+                store.getObject(EXISTING_PID));
     }
 
     @Test (expected=IllegalStateException.class)
     public void getObjectAfterClose() {
-        testSession.close();
-        testSession.getObject("test:non-existing");
+        store.close();
+        store.getObject("test:non-existing");
     }
 
     @Test (expected=NullPointerException.class)
     public void updateObjectNull() {
-        testSession.updateObject(null);
+        store.updateObject(null);
     }
     
     @Test (expected=IllegalArgumentException.class)
     public void updateObjectNoPid() {
-        testSession.updateObject(new FedoraObject());
+        store.updateObject(new FedoraObject());
     }
 
     @Test (expected=NotFoundException.class)
     public void updateObjectNonExisting() {
-        testSession.updateObject(
+        store.updateObject(
                 new FedoraObject().pid("test:non-existing"));
     }
 
     @Test
     public void updateObjectLabel() {
         FedoraObject object = new FedoraObject().pid(EXISTING_PID);
-        testSession.addObject(object);
-        Assert.assertNull(testSession.getObject(EXISTING_PID).label());
-        testSession.updateObject(
+        store.addObject(object);
+        Assert.assertNull(store.getObject(EXISTING_PID).label());
+        store.updateObject(
                 new FedoraObject().pid(EXISTING_PID).label("label"));
         Assert.assertEquals("label",
-                testSession.getObject(EXISTING_PID).label());
+                store.getObject(EXISTING_PID).label());
     }
 
     @Test
@@ -189,18 +189,18 @@ public class LegacyFedoraStoreSessionTest {
 
     @Test (expected=IllegalStateException.class)
     public void updateObjectAfterClose() throws Exception {
-        testSession.close();
+        store.close();
         updateObjectDropDS1();
     }
 
     @Test (expected=NullPointerException.class)
     public void deleteObjectNullPid() {
-        testSession.deleteObject(null);
+        store.deleteObject(null);
     }
 
     @Test (expected=NotFoundException.class)
     public void deleteObjectNonExisting() {
-        testSession.deleteObject("test:non-existing");
+        store.deleteObject("test:non-existing");
     }
 
     @Test
@@ -208,7 +208,7 @@ public class LegacyFedoraStoreSessionTest {
         Assert.assertTrue(fileExists(testContentStore, DS1V0_ID, true));
         Assert.assertTrue(fileExists(testContentStore, DS2V0_ID, true));
         addObjectWithDS1andDS2();
-        testSession.deleteObject(EXISTING_PID);
+        store.deleteObject(EXISTING_PID);
         Assert.assertFalse(fileExists(testContentStore, DS1V0_ID, false));
         Assert.assertFalse(fileExists(testContentStore, DS2V0_ID, false));
     }
@@ -216,8 +216,8 @@ public class LegacyFedoraStoreSessionTest {
     @Test (expected=IllegalStateException.class)
     public void deleteObjectAfterClose() throws Exception {
         addObjectWithDS1andDS2();
-        testSession.close();
-        testSession.deleteObject(EXISTING_PID);
+        store.close();
+        store.deleteObject(EXISTING_PID);
     }
 
     @Test
@@ -229,8 +229,8 @@ public class LegacyFedoraStoreSessionTest {
     public void listObjectsAfterAdd() {
         FedoraObject o1 = new FedoraObject().pid("test:o1");
         FedoraObject o2 = new FedoraObject().pid("test:o2");
-        testSession.addObject(o1);
-        testSession.addObject(o2);
+        store.addObject(o1);
+        store.addObject(o2);
         Set<FedoraObject> set = listObjects();
         Assert.assertTrue(set.contains(o1));
         Assert.assertTrue(set.contains(o2));
@@ -241,9 +241,9 @@ public class LegacyFedoraStoreSessionTest {
     public void listObjectsAfterDelete() {
         FedoraObject o1 = new FedoraObject().pid("test:o1");
         FedoraObject o2 = new FedoraObject().pid("test:o2");
-        testSession.addObject(o1);
-        testSession.addObject(o2);
-        testSession.deleteObject("test:o2");
+        store.addObject(o1);
+        store.addObject(o2);
+        store.deleteObject("test:o2");
         Set<FedoraObject> set = listObjects();
         Assert.assertTrue(set.contains(o1));
         Assert.assertEquals(1, set.size());
@@ -251,174 +251,174 @@ public class LegacyFedoraStoreSessionTest {
 
     @Test (expected=IllegalStateException.class)
     public void listObjectsAfterClose() throws Exception {
-        testSession.close();
+        store.close();
         listObjects();
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentNullPid() {
-        testSession.getContent(null, "DS1", "DS1.0");
+        store.getContent(null, "DS1", "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentNullDatastreamId() {
-        testSession.getContent(EXISTING_PID, null, "DS1.0");
+        store.getContent(EXISTING_PID, null, "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentNullDatastreamVersionId() {
-        testSession.getContent(EXISTING_PID, "DS1", null);
+        store.getContent(EXISTING_PID, "DS1", null);
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentObjectNotFound() {
-        testSession.getContent(EXISTING_PID, "DS1", "DS1.0");
+        store.getContent(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentDatastreamNotFound() {
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
-        testSession.getContent(EXISTING_PID, "DS1", "DS1.0");
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.getContent(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentDatastreamExistsContentNotFound() {
         addObjectWithDS1(true);
-        testSession.getContent(EXISTING_PID, "DS1", "DS1.0");
+        store.getContent(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test
     public void getContentDatastreamExistsContentExistsTwice() throws Exception {
         addObjectWithDS1(true);
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
         Assert.assertEquals("value", IOUtils.toString(
-                testSession.getContent(EXISTING_PID, "DS1", "DS1.0")));
+                store.getContent(EXISTING_PID, "DS1", "DS1.0")));
         Assert.assertEquals("value", IOUtils.toString(
-                testSession.getContent(EXISTING_PID, "DS1", "DS1.0")));
+                store.getContent(EXISTING_PID, "DS1", "DS1.0")));
     }
 
     @Test (expected=IllegalStateException.class)
     public void getContentAfterClose() throws Exception {
-        testSession.close();
-        testSession.getContent(EXISTING_PID, "DS1", "DS1.0");
+        store.close();
+        store.getContent(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentLengthNullPid() {
-        testSession.getContentLength(null, "DS1", "DS1.0");
+        store.getContentLength(null, "DS1", "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentLengthNullDatastreamId() {
-        testSession.getContentLength(EXISTING_PID, null, "DS1.0");
+        store.getContentLength(EXISTING_PID, null, "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void getContentLengthNullDatastreamVersionId() {
-        testSession.getContentLength(EXISTING_PID, "DS1", null);
+        store.getContentLength(EXISTING_PID, "DS1", null);
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentLengthObjectNotFound() {
-        testSession.getContentLength(EXISTING_PID, "DS1", "DS1.0");
+        store.getContentLength(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentLengthDatastreamNotFound() {
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
-        testSession.getContentLength(EXISTING_PID, "DS1", "DS1.0");
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.getContentLength(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NotFoundException.class)
     public void getContentLengthDatastreamExistsContentNotFound() {
         addObjectWithDS1(true);
-        testSession.getContentLength(EXISTING_PID, "DS1", "DS1.0");
+        store.getContentLength(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test
     public void getContentLengthDatastreamExistsContentFoundTwice() throws Exception {
         addObjectWithDS1(true);
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
-        Assert.assertEquals(5L, testSession.getContentLength(EXISTING_PID,
+        Assert.assertEquals(5L, store.getContentLength(EXISTING_PID,
                 "DS1", "DS1.0"));
-        Assert.assertEquals(5L, testSession.getContentLength(EXISTING_PID,
+        Assert.assertEquals(5L, store.getContentLength(EXISTING_PID,
                 "DS1", "DS1.0"));
     }
 
     @Test (expected=IllegalStateException.class)
     public void getContentLengthAfterClose() throws Exception {
-        testSession.close();
-        testSession.getContentLength(EXISTING_PID, "DS1", "DS1.0");
+        store.close();
+        store.getContentLength(EXISTING_PID, "DS1", "DS1.0");
     }
 
     @Test (expected=NullPointerException.class)
     public void setContentNullPid() {
-        testSession.setContent(null, "DS1", "DS1.0",
+        store.setContent(null, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
     }
 
     @Test (expected=NullPointerException.class)
     public void setContentNullDatastreamId() {
-        testSession.setContent(EXISTING_PID, null, "DS1.0",
+        store.setContent(EXISTING_PID, null, "DS1.0",
                 IOUtils.toInputStream("value"));
     }
 
     @Test (expected=NullPointerException.class)
     public void setContentNullDatastreamVersionId() {
-        testSession.setContent(EXISTING_PID, "DS1", null,
+        store.setContent(EXISTING_PID, "DS1", null,
                 IOUtils.toInputStream("value"));
     }
 
     @Test (expected=NullPointerException.class)
     public void setContentNullInputStream() {
-        testSession.setContent(EXISTING_PID, null, "DS1.0", null);
+        store.setContent(EXISTING_PID, null, "DS1.0", null);
     }
 
     @Test (expected=NotFoundException.class)
     public void setContentObjectNotFound() {
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
     }
 
     @Test (expected=NotFoundException.class)
     public void setContentDatastreamNotFound() {
-        testSession.addObject(new FedoraObject().pid(EXISTING_PID));
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.addObject(new FedoraObject().pid(EXISTING_PID));
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
     }
 
     @Test (expected=NotFoundException.class)
     public void setContentDatastreamNotManaged() {
         addObjectWithDS1(false);
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value"));
     }
 
     @Test
     public void setContentDatastreamManagedTwice() throws Exception {
         addObjectWithDS1(true);
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value1"));
         Assert.assertEquals("value1", IOUtils.toString(
-                testSession.getContent(EXISTING_PID, "DS1", "DS1.0")));
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+                store.getContent(EXISTING_PID, "DS1", "DS1.0")));
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value2"));
         Assert.assertEquals("value2", IOUtils.toString(
-                testSession.getContent(EXISTING_PID, "DS1", "DS1.0")));
+                store.getContent(EXISTING_PID, "DS1", "DS1.0")));
     }
 
     @Test (expected=IllegalStateException.class)
     public void setContentAfterClose() throws Exception {
-        testSession.close();
-        testSession.setContent(EXISTING_PID, "DS1", "DS1.0",
+        store.close();
+        store.setContent(EXISTING_PID, "DS1", "DS1.0",
                 IOUtils.toInputStream("value1"));
     }
 
     private Set<FedoraObject> listObjects() {
         Set<FedoraObject> set = new HashSet<FedoraObject>();
-        for (FedoraObject object : testSession) {
+        for (FedoraObject object : store) {
             set.add(object);
         }
         return set;
@@ -441,7 +441,7 @@ public class LegacyFedoraStoreSessionTest {
         FedoraObject object = new FedoraObject()
                 .pid(EXISTING_PID)
                 .putDatastream(ds);
-        testSession.addObject(object);
+        store.addObject(object);
     }
 
     private void addObjectWithDS1andDS2() {
@@ -449,16 +449,16 @@ public class LegacyFedoraStoreSessionTest {
                 .pid(EXISTING_PID)
                 .putDatastream(getManagedDatastreamWithOneVersion("DS1"))
                 .putDatastream(getManagedDatastreamWithOneVersion("DS2"));
-        testSession.addObject(object);
+        store.addObject(object);
     }
 
     private void updateObjectDropDS1() throws Exception {
-        Assert.assertEquals(2, testSession.getObject(EXISTING_PID)
+        Assert.assertEquals(2, store.getObject(EXISTING_PID)
                 .datastreams().size());
-        testSession.updateObject(new FedoraObject()
+        store.updateObject(new FedoraObject()
                 .pid(EXISTING_PID)
                 .putDatastream(getManagedDatastreamWithOneVersion("DS2")));
-        Assert.assertEquals(1, testSession.getObject(EXISTING_PID)
+        Assert.assertEquals(1, store.getObject(EXISTING_PID)
                 .datastreams().size());
     }
 
