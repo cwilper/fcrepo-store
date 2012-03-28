@@ -13,6 +13,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>transactions-jta</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.github.cwilper.fcrepo-misc</groupId>
       <artifactId>fcrepo-dto-foxml</artifactId>
       <scope>test</scope>
@@ -29,8 +35,20 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>javax.jcr</groupId>
       <artifactId>jcr</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

@@ -10,3 +10,5 @@ build
 *.iws
 *.swp
 *.log
+*.out
+*.epoch
