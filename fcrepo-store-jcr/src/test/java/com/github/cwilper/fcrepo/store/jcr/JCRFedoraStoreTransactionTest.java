@@ -36,6 +36,7 @@ public class JCRFedoraStoreTransactionTest {
     private static Session jcrSession;
     private static JCRFedoraStoreSession fedoraSession;
     private static TransactionTemplate tt;
+    private static UserTransactionManager txManager;
     
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -44,6 +45,7 @@ public class JCRFedoraStoreTransactionTest {
         repository = new TransientRepository(tempDir);
         credentials = new SimpleCredentials(
                 "admin", "admin".toCharArray());
+        txManager = new UserTransactionManager();
         jcrSession = repository.login(credentials);
         fedoraSession = new JCRFedoraStoreSession(jcrSession,
                 new FOXMLReader(), new FOXMLWriter());
@@ -74,18 +76,18 @@ public class JCRFedoraStoreTransactionTest {
     public void addSameObjectTwiceInTransactionWithAtomikos()
             throws Exception {
         Assert.assertFalse(fedoraSession.iterator().hasNext());
-        UserTransactionImp utx = new UserTransactionImp();
-        utx.begin();
+        txManager.init();
+        txManager.begin();
         boolean success = false;
         fedoraSession.addObject(new FedoraObject().pid("test:o1"));
         try {
             fedoraSession.addObject(new FedoraObject().pid("test:o1"));
-            utx.commit();
+            txManager.commit();
             success = true;
         } finally {
             Assert.assertFalse(success);
             Assert.assertTrue(fedoraSession.iterator().hasNext());
-            utx.rollback();
+            txManager.rollback();
             Assert.assertFalse(fedoraSession.iterator().hasNext());
         }
     }
