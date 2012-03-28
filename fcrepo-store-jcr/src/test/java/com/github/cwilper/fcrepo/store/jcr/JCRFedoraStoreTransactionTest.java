@@ -19,6 +19,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.jcr.Credentials;
+import javax.jcr.Repository;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 import java.io.File;
@@ -62,9 +63,35 @@ public class JCRFedoraStoreTransactionTest {
         repository.shutdown();
         FileUtils.deleteDirectory(tempDir);
     }
+
+    @Test
+    public void supportsTransactions() {
+        Assert.assertEquals("true", repository.getDescriptor(
+                Repository.OPTION_TRANSACTIONS_SUPPORTED));
+    }
+
+    @Test (expected=ExistsException.class)
+    public void addSameObjectTwiceInTransactionWithAtomikos()
+            throws Exception {
+        Assert.assertFalse(fedoraSession.iterator().hasNext());
+        UserTransactionImp utx = new UserTransactionImp();
+        utx.begin();
+        boolean success = false;
+        fedoraSession.addObject(new FedoraObject().pid("test:o1"));
+        try {
+            fedoraSession.addObject(new FedoraObject().pid("test:o1"));
+            utx.commit();
+            success = true;
+        } finally {
+            Assert.assertFalse(success);
+            Assert.assertTrue(fedoraSession.iterator().hasNext());
+            utx.rollback();
+            Assert.assertFalse(fedoraSession.iterator().hasNext());
+        }
+    }
     
     @Test
-    public void addSameObjectTwiceInTransaction() {
+    public void addSameObjectTwiceInTransactionWithSpring() {
         Assert.assertFalse(fedoraSession.iterator().hasNext());
         try {
             tt.execute(new TransactionCallbackWithoutResult() {
