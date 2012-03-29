@@ -21,6 +21,7 @@ import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.transaction.xa.XAResource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,7 +29,8 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 /**
- * JCR-based {@link FedoraStoreSession} implementation.
+ * JCR-based {@link FedoraStoreSession} implementation. Supports transactions
+ * if the underlying JCR Session is also an <code>XAResource</code>.
  */
 class JCRFedoraStoreSession implements FedoraStoreSession {
     private static final Logger logger =
@@ -48,6 +50,15 @@ class JCRFedoraStoreSession implements FedoraStoreSession {
         this.readerFactory = readerFactory;
         this.writerFactory = writerFactory;
         this.closed = false;
+    }
+
+    @Override
+    public XAResource getXAResource() {
+        if (session instanceof XAResource) {
+            return (XAResource) session;
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override

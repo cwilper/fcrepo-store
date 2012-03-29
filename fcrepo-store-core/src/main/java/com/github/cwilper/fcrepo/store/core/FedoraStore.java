@@ -10,5 +10,5 @@ public interface FedoraStore {
      * @return the session, never <code>null</code>.
      * @throws StoreException if anything goes wrong.
      */
-    public FedoraStoreSession getSession();
+    FedoraStoreSession getSession();
 }

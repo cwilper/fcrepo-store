@@ -13,6 +13,10 @@ import javax.jcr.RepositoryException;
 /**
  * JCR-based implementation of {@link FedoraStore}.
  * <p>
+ * This implementation supports transactions if the underlying JCR
+ * implementation's <code>Session</code>s also implement
+ * <code>XAResource</code>s, as Jackrabbit's do.
+ * <p>
  * In order to scale effectively to millions of objects, this implementation
  * stores serialized objects and managed datastream content within a
  * multi-level directory (<code>nt:folder</code>) structure based on the pid

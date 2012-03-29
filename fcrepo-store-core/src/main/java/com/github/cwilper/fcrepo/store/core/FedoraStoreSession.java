@@ -2,6 +2,7 @@ package com.github.cwilper.fcrepo.store.core;
 
 import com.github.cwilper.fcrepo.dto.core.FedoraObject;
 
+import javax.transaction.xa.XAResource;
 import java.io.InputStream;
 
 /**
@@ -10,6 +11,16 @@ import java.io.InputStream;
  * Implementations should be presumed non-threadsafe unless explicitly stated.
  */
 public interface FedoraStoreSession extends Iterable<FedoraObject> {
+    /**
+     * Gets an <code>XAResource</code> that can be used to manage this
+     * session's participation in a distributed transaction, if supported.
+     *
+     * @return the XAResource.
+     * @throws UnsupportedOperationException if the store does not support
+     *         working with transactions in this way (or at all).
+     */
+    XAResource getXAResource();
+
     /**
      * Adds an object.
      *
